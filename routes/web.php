@@ -22,7 +22,7 @@ Route::get('/', [WelcomeController::class, 'index'])
 Route::get('/categories', [CategoryController::class, 'index'])
 	->name('categories');
 
-Route::get('/categories/{category_slug}', [CategoryController::class, 'show'])
+Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])
 	->name('categories.category.show');
 
 
@@ -34,7 +34,7 @@ Route::get('products/{category:slug}/{product:id}', [ProductController::class, '
 
 // --------/cart ----------
 
-Route::patch('/cart/{category_slug}/{product}', [CartController::class, 'addToCart'])
+Route::patch('/cart/{category:slug}/{product:id}', [CartController::class, 'addToCart'])
 	->name('cart.category.product.update');
 
 

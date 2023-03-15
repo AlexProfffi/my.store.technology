@@ -12,7 +12,13 @@ class Label extends Model
 
 	protected $guarded = [];
 
-	protected $hidden = ['pivot'];
+
+	protected $hidden = [
+        'created_at',
+        'updated_at',
+        'pivot',
+    ];
+
 
 	// =========== METHODS =============
 
@@ -45,19 +51,6 @@ class Label extends Model
 		return $labels;
 	}
 
-	public function getLabelsC() {
-
-		$columns = [
-			'id',
-			'name'
-		];
-
-		$labels = $this
-			->select($columns)
-			->get();
-
-		return $labels;
-	}
 
 
 	public function getLabelsDPCE() {

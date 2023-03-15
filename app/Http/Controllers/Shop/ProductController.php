@@ -10,18 +10,8 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-	public $product;
-
-	public function __construct() {
-
-		$this->product = new Product;
-	}
-
-
-	// ---------- /products -----------
 
 	public function show(Category $category, Product $product) {
-
 
 		return Inertia::render('Shop/Product', [
             'category' => $category,

@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Services\Animal\Lion;
-use App\Traits\Filterer;
-use App\Services\Uploader\VideoUploader;
+
+use App\Services\Filterer\Filterer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +19,7 @@ class Product extends Model
 
 
 	protected $hidden = [
+        'pivot',
         'created_at',
         'updated_at'
     ];
@@ -38,6 +38,7 @@ class Product extends Model
 	}
 
 
+
 	// =========== METHODS =============
 
 
@@ -45,17 +46,6 @@ class Product extends Model
 
     	return $filterer->apply($builder);
 	}
-
-    public function scopePro(Builder $builder) {
-
-        $builder->where('id', 3);
-        return $builder;
-    }
-
-    public function scopeBro(Builder $builder) {
-
-        return $builder->orWhere('price', '>', 50000);
-    }
 
 
     /**
@@ -65,9 +55,11 @@ class Product extends Model
      * @param Filterer $filterer
      * @return LengthAwarePaginator
      */
-	public function paginateProductsWithRelations(Builder $filtererBuilder): LengthAwarePaginator {
+	public function paginateProductsWithRelations(Filterer $filterer): LengthAwarePaginator {
 
-		return $filtererBuilder
+		return $this
+
+            ->filters($filterer)
 
 			->select(['id', 'name', 'price', 'image'])
 
@@ -114,24 +106,27 @@ class Product extends Model
 	}
 
 
+    /**
+     * product->categories
+     *
+     * @param $categorySlug
+     * @param $productId
+     * @return Product
+     */
+	public function findProductWithCategories($categorySlug, $productId): Product {
 
-	public function firstProductCategoriesCTP($category, $product) {
-
-
-		$product = $this
+		return $this
 
 			->select(['id', 'name', 'price', 'image'])
 
-			->with(['categories' => function($query) use($category) {
+			->with(['categories' => function($query) use($categorySlug) {
 				$query
 					->select(['id', 'name', 'slug'])
 
-					->where('slug', $category);
+					->where('slug', $categorySlug);
 			}])
-			->find($product);
 
-
-		return $product;
+			->find($productId);
 	}
 
 

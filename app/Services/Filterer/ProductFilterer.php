@@ -2,16 +2,13 @@
 
 namespace App\Services\Filterer;
 
-use App\Traits\Filterer;
 use Illuminate\Database\Eloquent\Builder;
 
 
-class ProductFilterer {
-
-    use Filterer;
+class ProductFilterer extends Filterer {
 
 
-	private function label_ids($requestItems) {
+	protected function label_ids($requestItems) {
 
 		$this->builder->whereHas('labels', function(Builder $query) use($requestItems) {
 			$query->whereIn('id', $requestItems);
@@ -19,13 +16,13 @@ class ProductFilterer {
 	}
 
 
-    private function price_from($requestItem) {
+    protected function price_from($requestItem) {
 
 		$this->builder->where('price', '>=', $requestItem);
 	}
 
 
-    private function price_to($requestItem) {
+    protected function price_to($requestItem) {
 
 		$this->builder->where('price', '<=', $requestItem);
 	}

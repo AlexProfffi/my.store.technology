@@ -6,42 +6,28 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Cart;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
-use Inertia\Inertia;
 
 
 class CartController extends Controller
 {
-	public $product;
 
-	public function __construct()
-	{
-		$this->product = new Product();
-	}
+	public function __construct(
 
-
-	// ---------- /cart -----------
-
-//	public function cart() {
-//
-//
-//		$cartCollection = Cart::get();
-//
-//
-//		return $cartCollection;
-//	}
+        public Product $product
+    ){}
 
 
-	public function addToCart(Request $request, $category, $product) {
+	public function addToCart(Request $request, string $categorySlug, int $productId) {
 
-
-		// ------ Find product->categories -------
 
 		$product = $this->product
-				->firstProductCategoriesCTP($category, $product);
+				->findProductWithCategories($categorySlug, $productId);
 
 
 		if(empty($product && $product->categories->count())) abort(404);
+
+
+        $product->makeVisible('pivot');
 
 
 		Cart::add($product, $request);
@@ -49,14 +35,4 @@ class CartController extends Controller
 
 		return redirect()->back();
 	}
-
-
-//	public function removeProductCart($productCode, Request $request) {
-//
-//
-//		Cart::remove($productCode, $request);
-//
-//
-//		return redirect()->route('cart');
-//	}
 }

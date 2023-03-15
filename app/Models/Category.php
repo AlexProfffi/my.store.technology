@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Filterer;
+use App\Services\Filterer\Filterer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,11 @@ class Category extends Model
 
     protected $guarded = [];
 
-	protected $hidden = ['pivot'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'pivot',
+    ];
 
 
 	// ========== RELATIONSHIPS ============
@@ -28,49 +32,27 @@ class Category extends Model
 
 	// =========== METHODS =============
 
-	public function getCategoriesC()
-	{
-		$columns = [
-			'id',
-			'name',
-			'slug',
-			'description'
-		];
 
-		$categories = $this
-			->select($columns)
-			->get();
-
-		return $categories;
-	}
-
-
-	public function firstCategoryProductsLabelsC(Filterer $filterer, $category) {
-
-		$category = $this
-			->select([
-				'id',
-				'name',
-				'slug',
-				'description'
-			])
-			->where('slug', $category)
-			->first();
-
-
-		if($category == null) return;
+    /**
+     * category->products
+     *
+     * @param Filterer $filterer
+     * @param Category $category
+     * @return Category
+     */
+	public function paginateCategoryWithProducts(Filterer $filterer, Category $category): Category {
 
 
 		$category->setRelation('products', $category->products()
+
 			->filters($filterer)
-			->select([
-				'id',
-				'name',
-				'price',
-				'image'
-			])
+
+			->select(['id', 'name', 'price', 'image'])
+
 			->orderBy('updated_at', 'desc')
-			->with(['labels:id,name,class'])
+
+			->with('labels')
+
 			->paginate(6)->withQueryString());
 
 
