@@ -20,8 +20,14 @@ mix.js('resources/js/app.js', 'public/js').vue()
     // .sass('resources/sass/app.scss', 'public/css').options({
     //     processCssUrls: false
     // })
+    .options({
+        hmrOptions: {
+            host: 'localhost',
+            port: '3001'
+        },
+    })
     .webpackConfig(require('./webpack.config'))
-    .sourceMaps(!production, 'source-map')
+    //.sourceMaps(!production, 'source-map')
     .disableNotifications()
     .browserSync({
         proxy: process.env.APP_URL,
