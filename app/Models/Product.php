@@ -14,9 +14,7 @@ class Product extends Model
 {
     use HasFactory, \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
-
 	protected $guarded = [];
-
 
 	protected $hidden = [
         'pivot',
@@ -38,41 +36,12 @@ class Product extends Model
 	}
 
 
-
 	// =========== METHODS =============
 
 
 	public function scopeFilters(Builder $builder, Filterer $filterer): Builder {
 
     	return $filterer->apply($builder);
-	}
-
-
-    /**
-     * products->categories <br>
-     * products->labels
-     *
-     * @param Filterer $filterer
-     * @return LengthAwarePaginator
-     */
-	public function paginateProductsWithRelations(Filterer $filterer): LengthAwarePaginator {
-
-		return $this
-
-            ->filters($filterer)
-
-			->select(['id', 'name', 'price', 'image'])
-
-			->orderBy('updated_at', 'desc')
-
-			->with(['categories' => function($query) {
-                $query
-                    ->select(['id', 'name', 'slug'])
-                    ->take(1); // package eloquent-eager-limit
-
-            }, 'labels:id,name,class'])
-
-			->paginate(6)->withQueryString();
 	}
 
 
@@ -109,20 +78,16 @@ class Product extends Model
     /**
      * product->categories
      *
-     * @param $categorySlug
-     * @param $productId
+     * @param string $categorySlug
+     * @param int $productId
      * @return Product
      */
-	public function findProductWithCategories($categorySlug, $productId): Product {
+	public function findProductWithRelations(string $categorySlug, int $productId): Product {
 
 		return $this
 
-			->select(['id', 'name', 'price', 'image'])
-
 			->with(['categories' => function($query) use($categorySlug) {
 				$query
-					->select(['id', 'name', 'slug'])
-
 					->where('slug', $categorySlug);
 			}])
 

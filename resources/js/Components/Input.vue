@@ -5,8 +5,7 @@
 			{{ label.text }}
 		</label>
 
-		<input :id="id" class="form-control"
-			   v-bind="{ ...$attrs, class: input.class }"
+		<input :id="id" class="form-control input"
 			   :value="modelValue" @input="$emit('update:modelValue', proxyValue($event))">
 
 		<div class="errors" v-if="error">{{ error }}</div>
@@ -51,16 +50,20 @@
     }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
-	.text-input {
+    .input {
+        display: inline-block;
+        width: 100px;
+        margin-left: 0.5rem;
+        height: 2rem;
+    }
 
+    .errors {
+        margin-top: .25rem;
+        font-size: .875em;
+        color: #dc3545;
+    }
 
-		.errors {
-			margin-top: .25rem;
-			font-size: .875em;
-			color: #dc3545;
-		}
-	}
 
 </style>

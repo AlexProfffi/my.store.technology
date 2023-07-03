@@ -16,7 +16,7 @@ class CartCollection
 
 		// ------ Get user cart -------
 
-		if(auth()->check()) {
+        if(auth()->check()) {
 
 			$user = auth()->user();
 

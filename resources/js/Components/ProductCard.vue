@@ -1,7 +1,6 @@
 <template>
-	<div class="product-card col-sm-6 col-md-4">
+	<div v-for="product in products" :key="product.id" class="product-card col-sm-6 col-md-4">
 		<div class="thumbnail">
-
 			<div class="labels">
 				<div v-for="label in product.labels"
 					 :key="label.id"
@@ -12,7 +11,7 @@
 			<img class="img-fluid" :src="product.image">
 			<div class="caption">
 				<h3>
-					<Link :href="route('products.category.product.show', [categorySlug, product.id])">
+					<Link :href="route('products.category.product.show', [category.slug, product.id])">
 						{{ product.name }}
 					</Link>
 				</h3>
@@ -21,13 +20,12 @@
 				</div>
 
 				<h5>
-					<form v-if="cartCollection[product.id]" @submit.prevent="showCart">
+					<form v-if="cart[product.id]" @submit.prevent="showCart">
 						<button type="submit" class="btn btn-primary" role="button">В корзинe</button>
 					</form>
-					<form v-else @submit.prevent="addToCart(categorySlug, product.id)">
+					<form v-else @submit.prevent="addToCart(category, product)">
 						<button type="submit" class="btn btn-success" role="button">В корзинy</button>
 					</form>
-
 				</h5>
 				<br>
 			</div>
@@ -35,58 +33,70 @@
 	</div>
 </template>
 
-<script>
 
-    import useCart from "@/Composables/useCart";
+<script setup>
+
+// ======== Import ========
+
+import useCart from "@/Composables/useCart";
+import {computed, toRefs} from "vue";
 
 
-    export default {
+// ======== Props ========
 
-        props: {
-            product: Object,
-            categorySlug: String,
-        },
+const props = defineProps({
+    category: Object,
+})
 
-        setup() {
+const { category } = toRefs(props)
 
-            const { cartCollection, showCart, addToCart } = useCart();
 
-            return {
-                cartCollection,
-                showCart,
-                addToCart
-            }
-        },
+// ======== Use Cart ========
 
-    }
+const { cart, showCart, addToCart } = useCart()
+
+
+
+// ======== Product Card ========
+
+// ------ Data -------
+
+
+
+// ------ Computed -------
+
+const products = computed(() => {
+
+    return category.value.products.data ??
+        category.value.products;
+})
+
 </script>
 
-<style lang="scss">
 
-	.product-card {
+<style scoped lang="scss">
 
-		.labels {
-			position: absolute;
-		}
+    .labels {
+        position: absolute;
+    }
 
-		.labels .badge {
-			display: block;
-		}
+    .labels .badge {
+        display: block;
+    }
 
-		.badge.badge-success {
-			color: #fff;
-			background-color: #28a745;
-		}
+    .badge.badge-success {
+        color: #fff;
+        background-color: #28a745;
+    }
 
-		.badge.badge-warning {
-			color: #fff;
-			background-color: #dc3545;
-		}
+    .badge.badge-warning {
+        color: #fff;
+        background-color: #dc3545;
+    }
 
-		.badge.badge-danger {
-			color: #212529;
-			background-color: #ffc107;
-		}
-	}
+    .badge.badge-danger {
+        color: #212529;
+        background-color: #ffc107;
+    }
 
 </style>

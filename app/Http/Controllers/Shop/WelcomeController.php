@@ -1,14 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers\Shop;
 
-
-use App\Http\Requests\Shop\ProductRequest;
-use App\Models\Label;
-use App\Models\Product;
-use App\Services\Filterer\ProductFilterer;
+use App\Models\Category;
 use Inertia\Inertia;
+use Cart;
 use App\Http\Controllers\Controller;
 
 
@@ -17,31 +13,20 @@ class WelcomeController extends Controller
 
     public function __construct(
 
-        public Product $product,
-        public Label $label
+        public Category $category
     ) {}
 
 
+    public function index() {
+//        session()->flush();
+//        Cart::session(1)->clear();
 
-    public function index(ProductRequest $productRequest)
-    {
-        $requestItems = $productRequest->validated();
-
-
-        $labels = $this->label
-            ->select(['id', 'name'])->get();
-
-
-        $productFilterer = new ProductFilterer($requestItems);
-
-
-        $products = $this->product
-            ->paginateProductsWithRelations($productFilterer);
+        $categories = $this->category
+            ->getCategoriesWithRelations();
 
 
         return Inertia::render('Shop/Welcome', [
-            'products' => $products,
-            'labels' => $labels,
+            'categories' => $categories,
         ]);
     }
 

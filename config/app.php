@@ -175,7 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 		Spatie\Permission\PermissionServiceProvider::class,
-
+        Darryldecode\Cart\CartServiceProvider::class,
 
 
     ],
@@ -200,10 +200,10 @@ return [
         'Blade' => Illuminate\Support\Facades\Blade::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus' => Illuminate\Support\Facades\Bus::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
-		'EloquentCollection' => Illuminate\Database\Eloquent\Collection::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
         'Date' => Illuminate\Support\Facades\Date::class,
         'DB' => Illuminate\Support\Facades\DB::class,
@@ -235,9 +235,6 @@ return [
 		/*
 		 * My Aliases
 		 */
-		'Cart' => App\Facades\CartFacade::class,
-        'Lion' => App\Services\Animal\Lion::class,
-//        'Cat' => App\Services\Animal\Cat::class,
 
     ],
 

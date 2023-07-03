@@ -2,15 +2,13 @@
 
 namespace App\Services\Filterer;
 
-use Illuminate\Database\Eloquent\Builder;
-
 
 class ProductFilterer extends Filterer {
 
 
 	protected function label_ids($requestItems) {
 
-		$this->builder->whereHas('labels', function(Builder $query) use($requestItems) {
+		$this->builder->whereHas('labels', function($query) use($requestItems) {
 			$query->whereIn('id', $requestItems);
 		});
 	}

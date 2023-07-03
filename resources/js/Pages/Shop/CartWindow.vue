@@ -1,5 +1,5 @@
 <template>
-	<div class="modal fade" id="cartId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" ref="cartWindowRef" id="fg" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div v-if="isCartData" class="modal-content">
 				<div class="modal-header">
@@ -8,10 +8,8 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-
 				<div class="starter-template">
 					<p>Оформление заказа</p>
-
 					<div class="panel">
 						<table class="table table-striped">
 							<thead>
@@ -23,12 +21,12 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="product in cartCollection" :key="product.code">
+								<tr v-for="cartItem in cart" :key="cartItem.id">
 									<td>
-										<Link @click.stop="hideCart" :href="route('products.category.product.show', [product.categories[0].slug, product.id])">
+										<Link @click.stop="hideCart" :href="route('products.category.product.show', [cartItem.attributes.category.slug, cartItem.id])">
 
-											<img style="height: 56px" :src="product.image">
-											{{ product.name }}
+											<img style="height: 56px" :src="cartItem.attributes.image">
+											{{ cartItem.name }}
 
 										</Link>
 									</td>
@@ -36,23 +34,23 @@
 										<div class="btn-group">
 											<form class="cart-form">
 
-												<button :disabled="product.pivot.quantity <= 1" @click="addToCart(product.categories[0].slug, product.id, --product.pivot.quantity)" class="btn btn-danger cart-button-minus" type="button">
+												<button :disabled="cartItem.quantity <= 1" @click="updateToCart(cartItem, '--')" class="btn btn-danger cart-button-minus" type="button">
 													<span class="glyphicon glyphicon-minus" aria-hidden="true">-</span>
 												</button>
 
 												<input type="number"
-													   @input="addToCart(product.categories[0].slug, product.id, product.pivot.quantity)"
-													   v-model.number="product.pivot.quantity">
+													   @input="updateToCart(cartItem)"
+													   v-model.number="cartItem.quantity">
 
-												<button @click="addToCart(product.categories[0].slug, product.id, ++product.pivot.quantity)" class="btn btn-success cart-button-plus" type="button">
+												<button @click="updateToCart(cartItem, '++')" class="btn btn-success cart-button-plus" type="button">
 													<span class="glyphicon glyphicon-plus" aria-hidden="true">+</span>
 												</button>
 
 											</form>
 										</div>
 									</td>
-									<td>{{ product.price }}</td>
-									<td>{{ getCartProductCost(product) }}</td>
+									<td>{{ cartItem.price }}</td>
+									<td>{{ getCartProductCost(cartItem) }}</td>
 								</tr>
 								<tr>
 									<td colspan="3">Общая стоимость: {{ cartTotalCost }}</td>
@@ -75,45 +73,40 @@
 </template>
 
 
-<script>
+<script setup>
 
-    import useCart from "@/Composables/useCart";
+// ======== Import ========
 
-    export default {
-
-        setup() {
-
-            const {
-                cartForm,
-                cartCollection,
-                isCartData,
-                cartTotalCost,
-                hideCart,
-                addToCart,
-                getCartProductCost,
-
-            } = useCart();
+import useCart from "@/Composables/useCart";
+import { watch, inject } from "vue";
 
 
-            return {
-                cartForm,
-                cartCollection,
-                isCartData,
-                cartTotalCost,
-                hideCart,
-                addToCart,
-                getCartProductCost,
-            }
-        },
+// ======== Emits ========
 
-	}
+const emit = defineEmits(['cartWindowRef'])
 
 
+// ======== Use Cart ========
+
+const {
+    cart,
+    isCartData,
+    cartTotalCost,
+    hideCart,
+    updateToCart,
+    getCartProductCost,
+    cartWindowRef,
+} = useCart()
+
+
+watch(cartWindowRef, () => {
+    emit('cartWindowRef', cartWindowRef.value)
+})
 
 </script>
 
 
-<style lang="scss">
+<style scoped lang="scss">
 
 	.starter-template {
 		margin-left: 16px;

@@ -21,10 +21,10 @@
 					</div>
 				</div>
 				<p>{{ product.description }}</p>
-				<form v-if="cartCollection[product.id]" @submit.prevent="showCart">
+				<form v-if="cart[product.id]" @submit.prevent="showCart">
 					<button type="submit" class="btn btn-primary" role="button">Уже в корзинe</button>
 				</form>
-				<form v-else @submit.prevent="addToCart(category.slug, product.id)">
+				<form v-else @submit.prevent="addToCart(category, product)">
 					<button type="submit" class="btn btn-success">Добавить в корзину</button>
 				</form>
 			</div>
@@ -33,30 +33,37 @@
 	</div>
 </template>
 
+
 <script>
 
-    import ShopLayout from "@/Layouts/ShopLayout";
-    import useCart from "@/Composables/useCart";
+import ShopLayout from "@/Layouts/ShopLayout";
 
+export default {
+    layout: ShopLayout
+}
 
-    export default {
-
-        layout: ShopLayout,
-
-        props: {
-            category: Object,
-            product: Object,
-        },
-
-        setup() {
-
-            const { cartCollection, showCart, addToCart } = useCart();
-
-            return {
-                cartCollection,
-                showCart,
-                addToCart
-            }
-        },
-    }
 </script>
+
+
+<script setup>
+
+// ======== Import ========
+
+import useCart from "@/Composables/useCart";
+
+
+// ======== Props ========
+
+const props = defineProps({
+    category: Object,
+    product: Object
+})
+
+
+// ======== Use Cart ========
+
+const { cart, showCart, addToCart } = useCart();
+
+
+</script>
+

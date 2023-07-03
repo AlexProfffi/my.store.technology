@@ -1,5 +1,5 @@
 
-import { computed } from "vue";
+import {computed, inject, ref} from "vue";
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 
 
@@ -13,36 +13,35 @@ export default function useCart() {
         _method: 'patch'
     })
 
+    const cartWindowRef = inject('cartWindowRef', ref(null))
+
 
     // ------ Computed -------
 
-    const cartCollection = computed(() => {    // Get cart on a server
+    const cart = computed(() => {    // Get cart on a server
 
-        return usePage().props.value.cartCollection;
+        return usePage().props.value.cart;
     })
 
 
-    const cartId = computed(() => $('#cartId'))    // The cartId of the window(for show or hide)
+    const cartKeys = computed(() => {
 
-
-    const cartCollectionKeys = computed(() => {
-
-        return Object.keys(cartCollection.value);
+        return Object.keys(cart.value);
     })
 
 
     const isCartData = computed(() => {
 
-        return cartCollectionKeys.value.length;
+        return cartKeys.value.length;
     })
 
 
     const cartTotalCost = computed(() =>
 
-        cartCollectionKeys.value.reduce(
+        cartKeys.value.reduce(
 
             (total, key) =>
-                total + cartCollection.value[key].cost,
+                total + cart.value[key].cost,
             0
         )
     )
@@ -52,51 +51,77 @@ export default function useCart() {
 
     const showCart = () => {
 
-        cartId.value.modal('show');
+        $(cartWindowRef.value).modal('show');
     }
 
 
     const hideCart = () => {
 
-        cartId.value.modal('hide');
+        $(cartWindowRef.value).modal('hide');
     }
 
 
-    const addToCart = (categorySlug, productId, quantity) => {
+    const addToCart = (category, product) => {
 
-        if(quantity > 0) cartForm.quantity = quantity;
-
-
-        cartForm.post(route('cart.category.product.update', [categorySlug, productId]), {
+        cartForm.post(route('cart.category.product.addToCart', [category.slug, product.id]), {
 
             preserveScroll: true,
 
             onFinish: () => {
-                if(!cartId.value.hasClass('show'))
-                    cartId.value.modal('show');
+                if(!$(cartWindowRef.value).hasClass('show'))
+                    $(cartWindowRef.value).modal('show');
             }
         });
 
     }
 
 
-    const getCartProductCost = (product) => {
+    const updateToCart = (cartItem, symbol) => {
 
-        product.cost = product.pivot.quantity * product.price;
+        switch (symbol) {
+            case '--':
+                cartItem.quantity--;
+                break;
+            case '++':
+                cartItem.quantity++;
+                break;
+        }
 
-        return product.cost;
+        if(cartItem.quantity == '') {
+
+            cartItem.quantity = "''";
+            return;
+        }
+
+        cartForm.quantity = cartItem.quantity;
+
+
+        cartForm.post(route('cart.product.updateToCart', cartItem.id), {
+
+            preserveScroll: true,
+        });
+    }
+
+
+    const getCartProductCost = (cartItem) => {
+
+        cartItem.cost = cartItem.quantity * cartItem.price;
+
+        return cartItem.cost;
     }
 
 
     return {
         cartForm,
-        cartCollection,
+        cart,
         isCartData,
         cartTotalCost,
         showCart,
         hideCart,
         addToCart,
+        updateToCart,
         getCartProductCost,
+        cartWindowRef
     }
 
 };

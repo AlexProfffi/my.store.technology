@@ -35,11 +35,13 @@ Route::get('products/{category:slug}/{product:id}', [ProductController::class, '
 // --------/cart ----------
 
 Route::patch('/cart/{category:slug}/{product:id}', [CartController::class, 'addToCart'])
-	->name('cart.category.product.update');
+	->name('cart.category.product.addToCart');
+
+Route::patch('/cart/{product:id}', [CartController::class, 'updateToCart'])
+    ->name('cart.product.updateToCart');
 
 
 Route::middleware(['auth', 'role:user|admin'])->group(function () {
-
 
 	// -------- /logout ----------
 

@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->text('image')->nullable();
             $table->double('price')->nullable();
+            $table->json('pro')->nullable();
             $table->timestamps();
         });
     }

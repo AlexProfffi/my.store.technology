@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Shop\CartController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Cart;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,18 +34,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-
         $request->authenticate();
-
         $request->session()->regenerate();
 
 
-		// ------ Merge carts (db and session) -------
+        $user = $request->user();
 
-        Cart::mergeCarts();
+        CartController::mergeDbWithSession($user);
 
-
-		if($request->user()->hasRole('admin'))
+		if($user->hasRole('admin'))
 			return Inertia::location(route(RouteServiceProvider::ADMIN_HOME));
 
 		else
@@ -62,11 +60,8 @@ class AuthenticatedSessionController extends Controller
 
 		// ------- Get data before logout ------
 
-		$isAdmin = $request
-			->user()
-			->hasRole('admin');
-
-		$cartCollection = Cart::get();
+		$user = $request->user();
+        $isAdmin = $user->hasRole('admin');
 
 
 		// ------- Logout and remove all session data -------
@@ -78,8 +73,7 @@ class AuthenticatedSessionController extends Controller
 
         // ------- Set data ------
 
-		session()->put('cartCollection', $cartCollection);
-
+        CartController::TransferDbToSession($user);
 
 		if($isAdmin)
 			return Inertia::location(route(RouteServiceProvider::SHOP_HOME));

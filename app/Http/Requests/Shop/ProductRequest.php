@@ -15,6 +15,7 @@ class ProductRequest extends FormRequest
 
 			'label_ids' => ['nullable', 'array'],
 			'label_ids.*' => ['exists:labels,id'],
+            'pro.pro.0.0' => ['exists:labels,id']
 		];
 
     }

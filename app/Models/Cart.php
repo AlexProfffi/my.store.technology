@@ -11,15 +11,10 @@ class Cart extends Model
 
 	protected $guarded = [];
 
+    protected $casts = [
+        'data' => 'array'
+    ];
+
 	protected $table = 'carts';
-
-	// ========== RELATIONSHIPS ============
-
-	public function products()
-	{
-		return $this->belongsToMany(Product::class)
-			->withPivot(['slug', 'quantity'])
-			->withTimestamps();
-	}
 }
 

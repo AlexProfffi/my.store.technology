@@ -41,6 +41,6 @@
 
 <!--<style lang="scss" src="resources/sass/_reset.scss"></style>-->
 
-<style lang="scss">
+<style scoped lang="scss">
 
 </style>

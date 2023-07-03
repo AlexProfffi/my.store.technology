@@ -12,12 +12,9 @@
 
 				<Filter :url="route('categories.category.show', category.slug)" :labels="labels"></Filter>
 
-				<div class="row">
-					<product-card
-						v-for="product in category.products.data" :key="product.id"
-						:product="product" :category-slug="category.slug"
-					/>
-				</div>
+                <div class="row">
+                    <product-card :category="category"/>
+                </div>
 			</div>
 
 			<pagination class="pagination" :products="category.products"></pagination>
@@ -26,29 +23,34 @@
 	</div>
 </template>
 
+
 <script>
 
-    import ProductCard from "@/Components/ProductCard";
-    import ShopLayout from "@/Layouts/ShopLayout";
-    import Pagination from "@/Components/Pagination";
-    import Filter from "@/Components/Filter";
+import ShopLayout from "@/Layouts/ShopLayout";
 
-    export default {
+export default {
+    layout: ShopLayout
+}
 
-        layout: ShopLayout,
+</script>
 
-        components: {
-            Filter,
-            ProductCard,
-            Pagination,
-        },
 
-        props: {
-            category: Object,
-            labels: Array,
-        },
+<script setup>
 
-    }
+// ======== Import ========
+
+import ProductCard from "@/Components/ProductCard";
+import Pagination from "@/Components/Pagination";
+import Filter from "@/Components/Filter";
+
+
+// ======== Props ========
+
+const props = defineProps({
+    category: Object,
+    labels: Array
+})
+
 </script>
 
 

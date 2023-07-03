@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Shop;
 use App\Http\Requests\Shop\ProductRequest;
 use App\Models\Category;
 use App\Models\Label;
+use App\Models\Product;
 use App\Services\Filterer\ProductFilterer;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
@@ -46,8 +47,7 @@ class CategoryController extends Controller
         $productFilterer = new ProductFilterer($requestItems);
 
 
-		$category =	$this->category
-			->paginateCategoryWithProducts($productFilterer, $category);
+		$category->paginateProductsWithRelations($productFilterer);
 
 
 		return Inertia::render('Shop/Category', [

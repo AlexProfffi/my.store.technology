@@ -41,6 +41,24 @@ class ProductSeeder extends Seeder
 				'price' => 17221,
 				'image' => '/images/AllProducts/iphone_5.jpg'
 			],
+            [
+                'name' => 'Poco',
+                'description' => 'Великолепный телефон!',
+                'price' => 15000,
+                'image' => '/images/AllProducts/poco.jpg'
+            ],
+            [
+                'name' => 'Benson',
+                'description' => 'Отличная выдержка!',
+                'price' => 10000,
+                'image' => '/images/AllProducts/benson.jpg'
+            ],
+            [
+                'name' => 'Texet',
+                'description' => 'На все случаи жизни телефон!',
+                'price' => 19200,
+                'image' => '/images/AllProducts/texet.jpg'
+            ],
 			[
 				'name' => 'Наушники Beats Audio',
 				'description' => 'Отличный звук от Dr. Dre',
@@ -86,14 +104,14 @@ class ProductSeeder extends Seeder
 		];
 
 
-		$count = count($data);
-
-		for($i = 0; $i < $count; $i++)
-		{
-			$data[$i]['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
-			$data[$i]['updated_at'] = $data[$i]['created_at'];
-//			$data[$i]['image'] = 'http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg';
-		}
+//		$count = count($data);
+//
+//		for($i = 0; $i < $count; $i++)
+//		{
+//			$data[$i]['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
+//			$data[$i]['updated_at'] = $data[$i]['created_at'];
+////			$data[$i]['image'] = 'http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg';
+//		}
 
 
 

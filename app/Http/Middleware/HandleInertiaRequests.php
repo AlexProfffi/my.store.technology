@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 
+use App\Http\Controllers\Shop\CartController;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Cart;
@@ -51,7 +52,7 @@ class HandleInertiaRequests extends Middleware
 
 			'flash' => fn() => $request->session()->only(['success', 'message419', 'updateProduct', 'deleteProduct']),
 
-			'cartCollection' => fn() => Cart::get()->getDictionary(),
+			'cart' => fn() => CartController::getCart(),
 
 			'currentRouteName' => fn() => \Route::currentRouteName(),
 

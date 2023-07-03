@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use App\Services\Filterer\Filterer;
-use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class Category extends Model
@@ -34,29 +35,52 @@ class Category extends Model
 
 
     /**
-     * category->products
+     * categories->products->labels
+     *
+     * @return Collection
+     */
+    public function getCategoriesWithRelations(): Collection {
+
+        return $this
+
+            ->select(['id', 'name', 'slug'])
+
+            ->with(['products' => function($query) {
+                $query
+                    ->select(['id', 'name', 'price', 'image'])
+
+                    ->with('labels:id,name,class')
+
+                    ->take(3); // package eloquent-eager-limit
+            }])
+
+            ->whereIn('slug', ['mobilnye-telefony', 'portativnaya-texnika'])
+
+            ->get();
+    }
+
+
+    /**
+     * category->products->labels
      *
      * @param Filterer $filterer
-     * @param Category $category
-     * @return Category
+     * @return void
      */
-	public function paginateCategoryWithProducts(Filterer $filterer, Category $category): Category {
+	public function paginateProductsWithRelations(Filterer $filterer): void {
 
 
-		$category->setRelation('products', $category->products()
+		$this->setRelation('products', $this->products()
 
 			->filters($filterer)
 
-			->select(['id', 'name', 'price', 'image'])
-
-			->orderBy('updated_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->orderBy('id')
 
 			->with('labels')
 
-			->paginate(6)->withQueryString());
-
-
-		return $category;
+			->paginate(6, ['id', 'name', 'price', 'image'])
+            ->withQueryString()
+        );
 	}
 
 
