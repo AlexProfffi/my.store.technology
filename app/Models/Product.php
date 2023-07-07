@@ -35,6 +35,16 @@ class Product extends Model
 		return $this->belongsToMany(Label::class);
 	}
 
+    public function parent()
+    {
+        return $this->belongsTo(self::class);
+    }
+
+    public function children()
+    {
+        return $this->hasOne(self::class, 'parent_id');
+    }
+
 
 	// =========== METHODS =============
 
@@ -107,6 +117,7 @@ class Product extends Model
     	$products = $this
 			->select($columnsProduct)
 			->orderBy('updated_at', 'desc')
+            ->orderBy('id')
 			->with('categories:id,name')
 			->paginate(4);
 

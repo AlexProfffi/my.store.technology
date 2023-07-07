@@ -27,8 +27,7 @@ services:
     image: mysql:8.0
     restart: always
     volumes:
-      - ./tmp/db:/var/lib/mysql
-      - ./_docker/db/import:/var/www/_docker/db/import
+      - ./database/tmp/db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: a4b7ea0c30f83f4
       MYSQL_USER: Profi

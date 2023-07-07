@@ -1,31 +1,8 @@
 
-import { createStore } from "vuex";
+// ------ Example store ------
+
+// import {ref} from "vue";
+
+// export const globalReactiveVariable = ref(2)
 
 
-export const store = createStore({
-
-    state () {
-        return {
-
-            // ------- Cart ---------
-
-            cartS: false,
-            addToCartS: {}
-        }
-    },
-
-    mutations: {
-
-        // ------- Cart ---------
-
-        cartM(state) {
-
-            state.cartS = !state.cartS;
-        },
-
-        addToCartM(state, params) {
-
-            state.addToCartS = params;
-        }
-    }
-});

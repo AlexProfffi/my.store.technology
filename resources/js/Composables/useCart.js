@@ -1,6 +1,13 @@
 
-import {computed, inject, ref} from "vue";
+import {computed, ref} from "vue";
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
+
+
+// ------ Global Data -------
+
+const cartWindowRef = ref(null)
+
+// --------------------------
 
 
 export default function useCart() {
@@ -12,8 +19,6 @@ export default function useCart() {
         quantity: 1,
         _method: 'patch'
     })
-
-    const cartWindowRef = inject('cartWindowRef', ref(null))
 
 
     // ------ Computed -------

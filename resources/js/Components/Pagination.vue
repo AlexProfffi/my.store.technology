@@ -19,29 +19,47 @@
 	</div>
 </template>
 
-<script>
 
-    export default {
+<script setup>
 
-        inheritAttrs: false,
+// ======== Import ========
 
-        props: {
-            products: [Array, Object]
-        },
+import {computed, toRefs} from "vue";
+import { Link } from '@inertiajs/inertia-vue3';
 
-		computed: {
 
-			paginate() {
-			    return this.products.links &&
-					this.products.links.length > 3;
-			},
+// ======== Options ========
 
-			simplePaginate() {
-			    return this.products.links === undefined;
-			}
-		}
-    }
+defineOptions({ inheritAttrs: false })
+
+
+// ======== Props ========
+
+const props = defineProps({
+    products: [Array, Object]
+})
+
+const { products } = toRefs(props)
+
+
+// ======== Pagination ========
+
+// ------ Computed -------
+
+const paginate = computed(() => {
+
+    return products.value.links &&
+        products.value.links.length > 3;
+})
+
+const simplePaginate = computed(() => {
+
+    return products.value.links === undefined;
+})
+
 </script>
+
+
 
 <style lang="scss">
 

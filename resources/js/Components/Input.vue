@@ -1,11 +1,11 @@
 <template>
 	<div :class="$attrs.class">
 
-		<label :for="id">
+		<label v-bind="$attrs.email" :for="id">
 			{{ label.text }}
 		</label>
 
-		<input :id="id" class="form-control input"
+		<input :id="id" v-bind="{...$attrs, class: null}" :class="['form-control', input.class]"
 			   :value="modelValue" @input="$emit('update:modelValue', proxyValue($event))">
 
 		<div class="errors" v-if="error">{{ error }}</div>
@@ -24,9 +24,12 @@
             modelValue: [String,Number],
 			input: {
                 type: Object,
-				default: {}
-			},
-			label: Object,
+                default: {}
+            },
+			label: {
+                type: Object,
+                default: {}
+            },
 			error: String
 		},
 
@@ -52,18 +55,17 @@
 
 <style scoped lang="scss">
 
-    .input {
-        display: inline-block;
-        width: 100px;
-        margin-left: 0.5rem;
-        height: 2rem;
-    }
-
     .errors {
         margin-top: .25rem;
         font-size: .875em;
         color: #dc3545;
     }
 
+    .input-category {
+        display: inline-block;
+        width: 100px;
+        margin-left: 0.5rem;
+        height: 2rem;
+    }
 
 </style>

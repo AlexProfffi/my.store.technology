@@ -2,12 +2,9 @@
 
 namespace App\Providers;
 
-use App\Contracts\Uploader;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Shop\WelcomeController;
-use App\Services\Animal\Lion;
-use App\Services\Uploader\ImageUploader;
-use App\Services\Uploader\VideoUploader;
+
+use App\Services\Lion;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 

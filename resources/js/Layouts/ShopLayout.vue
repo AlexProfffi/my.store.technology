@@ -19,7 +19,7 @@
 					</li>
 					<li>
 						<a href="#" @click.prevent="showCart" class="ml-4 text-muted">Корзина</a>
-						<cart-window @cartWindowRef="cartWindowRef=$event"></cart-window>
+						<cart-window></cart-window>
 					</li>
 					<li v-if="can('logout')">
 						<a @click.prevent="logOutForm.post(route('logout.store'))" href="#" class="ml-4 text-muted">
@@ -41,6 +41,11 @@
 				</ul>
 			</div>
 		</div>
+
+        <div class="container">
+            <messages></messages>
+        </div>
+
 		<slot></slot>
 	</div>
 </template>
@@ -50,18 +55,20 @@
 
 // ======== Import ========
 
+import Messages from "@/Components/Messages.vue";
+
 require('bootstrap');
 import useCart from "@/Composables/useCart";
 import CartWindow from "@/Pages/Shop/CartWindow";
-import {computed, provide} from "vue";
+import {computed} from "vue";
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Link, Head } from '@inertiajs/inertia-vue3';
+import {can} from "@/helpers";
 
 
 // ======== Use Cart ========
 
-const { showCart, cartWindowRef } = useCart()
-
-provide('cartWindowRef', cartWindowRef)
+const { showCart } = useCart()
 
 
 // ======== Shop Layout ========

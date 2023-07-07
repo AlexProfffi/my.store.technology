@@ -24,10 +24,10 @@
 
 							<form @submit.prevent="submit">
 								<div class="form-group">
-									<text-input type="email" v-model="form.email" :label="{ text: 'Email' }" required autofocus />
+									<text-input v-bind="textInput.email" type="email" v-model="form.email" required autofocus />
 								</div>
 								<div class="form-group">
-									<text-input type="password" v-model="form.password" :label="{ text: 'Password' }" required autocomplete="current-password" />
+									<text-input v-bind="textInput.password" type="password" v-model="form.password" required autocomplete="current-password" />
 								</div>
 
 								<div class="form-group">
@@ -61,6 +61,7 @@
     import TextInput from '@/Components/Input'
     import CheckboxInput from '@/Components/Checkbox';
     import Messages from "@/Components/Messages";
+    import {Link} from "@inertiajs/inertia-vue3";
 
 
     export default {
@@ -72,6 +73,7 @@
             ShopLayout,
             TextInput,
             CheckboxInput,
+            Link
         },
 
         props: {
@@ -87,6 +89,15 @@
                     password: '',
                     remember: false,
                 }),
+
+                textInput: {
+                    email: {
+                        label: { text: 'Email' }
+                    },
+                    password: {
+                        label: { text: 'Password' }
+                    },
+                },
 
                 checkboxInput: {
                     label: {
@@ -111,3 +122,9 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .jon {
+        color: red;
+    }
+</style>

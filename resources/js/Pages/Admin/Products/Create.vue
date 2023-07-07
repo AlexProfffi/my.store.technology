@@ -103,6 +103,7 @@
     import CheckboxInput from '@/Components/Checkbox';
     import TextInput from "@/Components/Input";
     import ArrayErrors from "@/Components/ArrayErrors";
+    import { Head } from '@inertiajs/inertia-vue3';
 
     export default {
 
@@ -112,7 +113,8 @@
             ValidationErrors,
 			AdminLayout,
 			CheckboxInput,
-            ArrayErrors
+            ArrayErrors,
+            Head
         },
 
 		props: {

@@ -49,7 +49,11 @@ class Handler extends ExceptionHandler
 
 		if($exception instanceof UnauthorizedException) {
 
-			return $this->redirectRoles($request);
+            $roles = $exception->getRequiredRoles();
+
+            $roleString = implode(', ', $roles);
+
+            return back()->with('noRights', 'This operation can be performed by the ' . $roleString);
 		}
 
 

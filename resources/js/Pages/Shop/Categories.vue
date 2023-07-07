@@ -22,20 +22,26 @@
 	</div>
 </template>
 
-<script>
 
-    import ShopLayout from "@/Layouts/ShopLayout";
+<script setup>
 
-    export default {
+// ======== Import ========
 
-        layout: ShopLayout,
-
-        props: {
-		    categories: Array,
-		},
+import ShopLayout from "@/Layouts/ShopLayout";
+import { Head, Link } from '@inertiajs/inertia-vue3';
 
 
-    }
+// ======== Options ========
+
+defineOptions({ layout: ShopLayout })
+
+
+// ======== Props ========
+
+const props = defineProps({
+    categories: Array
+})
+
 </script>
 
 

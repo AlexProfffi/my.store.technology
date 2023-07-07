@@ -23,7 +23,7 @@ mix.js('resources/js/app.js', 'public/js').vue()
     .options({
         hmrOptions: {
             host: 'localhost',
-            port: '3001'
+            port: '3000'
         },
     })
     .webpackConfig(require('./webpack.config'))

@@ -41,7 +41,7 @@ Route::patch('/cart/{product:id}', [CartController::class, 'updateToCart'])
     ->name('cart.product.updateToCart');
 
 
-Route::middleware(['auth', 'role:user|admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
 	// -------- /logout ----------
 
@@ -82,27 +82,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-
-
 Route::middleware(['guest'])->group(function () {
 
+// -------- /register ----------
 
-	// -------- /register ----------
+Route::get('/register/create', [RegisteredUserController::class, 'create'])
+    ->name('register.create');
 
-	Route::get('/register/create', [RegisteredUserController::class, 'create'])
-		->name('register.create');
-
-	Route::post('/register', [RegisteredUserController::class, 'store'])
-		->name('register.store');
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->name('register.store');
 
 
-	// -------- /login ----------
+// -------- /login ----------
 
-	Route::get('/login/create', [AuthenticatedSessionController::class, 'create'])
-		->name('login.create');
+Route::get('/login/create', [AuthenticatedSessionController::class, 'create'])
+    ->name('login.create');
 
-	Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-		->name('login.store');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->name('login.store');
 
 });
 

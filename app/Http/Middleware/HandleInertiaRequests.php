@@ -50,7 +50,7 @@ class HandleInertiaRequests extends Middleware
 
 			'guest' => fn() => $user == null,
 
-			'flash' => fn() => $request->session()->only(['success', 'message419', 'updateProduct', 'deleteProduct']),
+			'flash' => fn() => $request->session()->only(['noRights', 'success', 'message419', 'updateProduct', 'deleteProduct']),
 
 			'cart' => fn() => CartController::getCart(),
 

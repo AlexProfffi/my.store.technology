@@ -34,22 +34,18 @@
 </template>
 
 
-<script>
-
-import ShopLayout from "@/Layouts/ShopLayout";
-
-export default {
-    layout: ShopLayout
-}
-
-</script>
-
-
 <script setup>
 
 // ======== Import ========
 
 import useCart from "@/Composables/useCart";
+import ShopLayout from "@/Layouts/ShopLayout.vue";
+import { Link, Head } from '@inertiajs/inertia-vue3';
+
+
+// ======== Options ========
+
+defineOptions({ layout: ShopLayout })
 
 
 // ======== Props ========

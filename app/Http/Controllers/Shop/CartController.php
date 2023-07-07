@@ -147,7 +147,9 @@ class CartController extends Controller
 
         $cart = $user->cart->data;
 
-        Cart::session(1)->add($cart);
+
+        if($cart !== [])
+            Cart::session(1)->add($cartItem);
     }
 
 }

@@ -16,6 +16,10 @@
             flashMessage() {
 
                 return {
+                    'noRights': {
+                        style: 'alert-danger',
+                        description: this.flashMessages['noRights'],
+                    },
                     'message419': {
                         style: 'alert-danger',
                         description: this.flashMessages['message419'],

@@ -90,6 +90,8 @@
     import AdminLayout from "@/Layouts/AdminLayout";
     import Pagination from "@/Components/Pagination";
     import Messages from "@/Components/Messages";
+    import { Head, Link } from '@inertiajs/inertia-vue3';
+
 
     export default {
 
@@ -105,7 +107,9 @@
         components: {
             Messages,
 			Pagination,
-			AdminLayout
+			AdminLayout,
+            Head,
+            Link
         },
 
 		props: {

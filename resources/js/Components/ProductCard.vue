@@ -40,6 +40,7 @@
 
 import useCart from "@/Composables/useCart";
 import {computed, toRefs} from "vue";
+import { Link } from '@inertiajs/inertia-vue3';
 
 
 // ======== Props ========
@@ -58,10 +59,6 @@ const { cart, showCart, addToCart } = useCart()
 
 
 // ======== Product Card ========
-
-// ------ Data -------
-
-
 
 // ------ Computed -------
 

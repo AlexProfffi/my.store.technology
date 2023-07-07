@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('parent_id')->nullable()->references('id')->on('products');
             $table->string('name');
             $table->text('description')->nullable();
             $table->text('image')->nullable();

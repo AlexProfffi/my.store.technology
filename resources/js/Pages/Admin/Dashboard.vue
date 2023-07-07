@@ -97,49 +97,26 @@
 	</admin-layout>
 </template>
 
-<script>
-    import AdminLayout from "@/Layouts/AdminLayout";
-    import Input from '@/Components/Input';
-    import Checkbox from '@/Components/Checkbox';
 
-    export default {
+<script setup>
 
-        components: {
-            AdminLayout,
-			Input,
-			Checkbox
-		},
+// ======== Import ========
 
-        props: {
-            categoriesCount: Number,
-        },
+import AdminLayout from "@/Layouts/AdminLayout";
+import {Head} from '@inertiajs/inertia-vue3';
 
-        data() {
-          	return {
-                names: [],
-          	    logOutForm: this.$inertia.form(),
-			}
-		},
 
-		computed: {
-            // proxyKkk: {
-            //     get() {
-            //         return this.kkk;
-            //     },
-            //     set(newValue) {
-            //         this.kkk = newValue;
-			// 	}
-			// }
+// ======== Props ========
 
-		}
+const props = defineProps({
+    categoriesCount: Number,
+})
 
-    }
 </script>
 
-<style type="scss">
-	/*html, body, body > div, body > div > div {*/
-	/*	height: 100% !important;*/
-	/*}*/
+
+<style lang="scss">
+
 	.dashboard {
 
 		.log-out-button {

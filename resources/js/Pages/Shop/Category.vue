@@ -24,17 +24,6 @@
 </template>
 
 
-<script>
-
-import ShopLayout from "@/Layouts/ShopLayout";
-
-export default {
-    layout: ShopLayout
-}
-
-</script>
-
-
 <script setup>
 
 // ======== Import ========
@@ -42,6 +31,13 @@ export default {
 import ProductCard from "@/Components/ProductCard";
 import Pagination from "@/Components/Pagination";
 import Filter from "@/Components/Filter";
+import ShopLayout from "@/Layouts/ShopLayout.vue";
+import { Head } from '@inertiajs/inertia-vue3';
+
+
+// ======== Options ========
+
+defineOptions({ layout: ShopLayout })
 
 
 // ======== Props ========

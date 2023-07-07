@@ -6,7 +6,7 @@ namespace App\Services\Filterer;
 class ProductFilterer extends Filterer {
 
 
-	protected function label_ids($requestItems) {
+	protected function label_ids(array $requestItems) {
 
 		$this->builder->whereHas('labels', function($query) use($requestItems) {
 			$query->whereIn('id', $requestItems);

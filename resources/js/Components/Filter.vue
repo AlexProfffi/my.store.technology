@@ -3,15 +3,20 @@
     <form class="filter row">
 
         <div class="form-group">
-            <text-input class="text-input" v-model="filterForm.price_from" :label="{ text: 'Цена от' }" :error="filterForm.errors.price_from" />
-            <text-input class="text-input" v-model="filterForm.price_to" :label="{ text: 'до' }" />
+            <TextInput type="text" v-bind="textInput.price_from" class="text-input" v-model="filterForm.price_from"
+                        :error="filterForm.errors.price_from"
+            />
+            <TextInput type="text" v-bind="textInput.price_to" class="text-input" v-model="filterForm.price_to"/>
             <button @click.prevent="storeFilter" class="btn btn-primary button-ok">OK</button>
         </div>
         <div class="form-group">
-            <checkbox-input v-for="(label, i) in labels" :key="label.id"
+            <checkbox-input class="checkbox-input"
+                            v-for="(label, i) in labels" :key="label.id"
                             :value="label.id" v-model="filterForm.label_ids"
-                            :label="{ name: this.labels[i].name, nameLocation: 'right'}"
-                            class="checkbox-input"
+                            :label="{
+                                name: this.labels[i].name,
+                                nameLocation: 'right'
+                            }"
             />
             <array-errors class="array-errors errors" array-name="label_ids" :errors="filterForm.errors" />
         </div>
@@ -25,7 +30,7 @@
 // ======== Import ========
 
 import CheckboxInput from '@/Components/Checkbox';
-import TextInput from "@/Components/Input";
+import TextInput from '@/Components/Input'
 import ArrayErrors from "@/Components/ArrayErrors";
 import {toRefs, watch} from "vue";
 import { useForm } from '@inertiajs/inertia-vue3';
@@ -50,6 +55,20 @@ const filterForm = useForm({
     price_from: undefined,
     price_to: undefined,
 })
+
+const textInput = {
+    price_from: {
+        label: { text: 'Цена от' },
+        input: { class: 'input-category' }
+    },
+    price_to: {
+        label: { text: 'до' },
+        input: { class: 'input-category' }
+    },
+}
+const form = {
+    email: ''
+}
 
 
 // ------- Methods --------

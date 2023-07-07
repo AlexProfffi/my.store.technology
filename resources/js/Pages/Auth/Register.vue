@@ -18,19 +18,19 @@
 
 							<form @submit.prevent="submit">
 								<div class="form-group">
-									<text-input type="text" v-model="form.name" :label="{ text: 'Name' }" autofocus required autocomplete="name" />
+									<text-input v-bind="textInput.name" type="text" v-model="form.name" autofocus required autocomplete="name" />
 								</div>
 
 								<div class="form-group">
-									<text-input type="email" v-model="form.email" :label="{ text: 'Email' }" required />
+									<text-input v-bind="textInput.email" type="email" v-model="form.email" required />
 								</div>
 
 								<div class="form-group">
-									<text-input type="password" v-model="form.password" :label="{ text: 'Password' }" required autocomplete="new-password" />
+									<text-input v-bind="textInput.password" type="password" v-model="form.password" required autocomplete="new-password" />
 								</div>
 
 								<div class="form-group">
-									<text-input type="password" v-model="form.password_confirmation" :label="{ text: 'Confirm Password' }" required autocomplete="new-password" />
+									<text-input v-bind="textInput.password_confirmation" type="password" v-model="form.password_confirmation" required autocomplete="new-password" />
 								</div>
 
 								<!--			<div class="form-group" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">-->
@@ -69,6 +69,8 @@
     import TextInput from '@/Components/Input'
     import ValidationErrors from '@/Components/ValidationErrors'
     import ShopLayout from "@/Layouts/ShopLayout"
+    import {Link} from "@inertiajs/inertia-vue3";
+
 
     export default {
         layout: ShopLayout,
@@ -77,6 +79,7 @@
             ShopLayout,
             TextInput,
             ValidationErrors,
+            Link
         },
 
         data() {
@@ -87,7 +90,21 @@
                     password: '',
                     password_confirmation: '',
                     terms: false,
-                })
+                }),
+                textInput: {
+                    name: {
+                        label: { text: 'Name' }
+                    },
+                    email: {
+                        label: { text: 'Email' }
+                    },
+                    password: {
+                        label: { text: 'Password' }
+                    },
+                    password_confirmation: {
+                        label: { text: 'Confirm Password' }
+                    },
+                },
             }
         },
         methods: {

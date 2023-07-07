@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Shop;
 use App\Http\Requests\Shop\ProductRequest;
 use App\Models\Category;
 use App\Models\Label;
-use App\Models\Product;
 use App\Services\Filterer\ProductFilterer;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;

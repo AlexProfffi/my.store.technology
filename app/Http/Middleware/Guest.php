@@ -23,7 +23,7 @@ class Guest
 
 		if (Auth::check()) {
 
-			return $this->redirectRoles($request);
+            return back()->with('noRights', 'This operation can be performed by the guest');
 		}
 
         return $next($request);

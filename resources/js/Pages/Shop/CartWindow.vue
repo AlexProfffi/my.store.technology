@@ -78,30 +78,20 @@
 // ======== Import ========
 
 import useCart from "@/Composables/useCart";
-import { watch, inject } from "vue";
-
-
-// ======== Emits ========
-
-const emit = defineEmits(['cartWindowRef'])
+import { Link } from '@inertiajs/inertia-vue3';
 
 
 // ======== Use Cart ========
 
-const {
+let {
     cart,
     isCartData,
     cartTotalCost,
     hideCart,
     updateToCart,
     getCartProductCost,
-    cartWindowRef,
+    cartWindowRef
 } = useCart()
-
-
-watch(cartWindowRef, () => {
-    emit('cartWindowRef', cartWindowRef.value)
-})
 
 </script>
 

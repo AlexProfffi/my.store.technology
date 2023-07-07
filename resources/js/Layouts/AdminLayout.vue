@@ -87,16 +87,18 @@
 
 <script>
 
-    require('admin-lte');
-    require('@/Plugins/fontawesome.js');
+    require('admin-lte')
     require('~/admin-lte/plugins/select2/js/select2.full.min.js');
+    require('@/Plugins/fontawesome.js');
 
 	import NavLink from "@/Components/NavLink";
+    import {Head} from "@inertiajs/inertia-vue3";
 
     export default {
 
         components: {
-			NavLink
+			NavLink,
+            Head
 		},
 
 		data() {
@@ -135,8 +137,8 @@
 
 <style lang="scss">
 
-	@import "resources/sass/Plugins/select2-bootstrap4";
-	@import "resources/sass/Plugins/select2";
+	@import "~admin-lte/plugins/select2/css/select2.min";
+    @import "~admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min";
 	@import "~admin-lte/build/scss/adminlte";
 	@import "resources/sass/Plugins/reset";
 

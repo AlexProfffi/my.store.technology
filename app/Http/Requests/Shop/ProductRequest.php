@@ -14,8 +14,7 @@ class ProductRequest extends FormRequest
 			'price_to' => ['numeric', 'min:1', 'max:1000000000'],
 
 			'label_ids' => ['nullable', 'array'],
-			'label_ids.*' => ['exists:labels,id'],
-            'pro.pro.0.0' => ['exists:labels,id']
+			'label_ids.*' => ['exists:labels,id']
 		];
 
     }

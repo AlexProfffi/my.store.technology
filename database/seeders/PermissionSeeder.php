@@ -4,12 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Spatie\Permission\PermissionRegistrar;
+
 
 class PermissionSeeder extends Seeder
 {
@@ -22,15 +22,15 @@ class PermissionSeeder extends Seeder
     {
 		app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+
+        Permission::create(['name' => 'logout']);
+
+
 		$userRole = Role::create(['name' => 'user']);
+        $userRole->givePermissionTo('logout');
+
 		$adminRole = Role::create(['name' => 'admin']);
-
-
-		Permission::create(['name' => 'logout']);
-
-
-		$userRole->givePermissionTo('logout');
-		$adminRole->givePermissionTo('logout');
+        $adminRole->givePermissionTo('logout');
 
 
 		$user = User::factory()
@@ -39,6 +39,7 @@ class PermissionSeeder extends Seeder
 				'email' => 'alex@gmail.com',
 				'password' => Hash::make('11112222'),
 			]);
+        $user->assignRole($userRole);
 
 		$admin = User::factory()
 			->create([
@@ -46,9 +47,6 @@ class PermissionSeeder extends Seeder
 				'email' => 'admin@gmail.com',
 				'password' => Hash::make('22221111'),
 			]);
-
-
-		$user->assignRole($userRole);
 		$admin->assignRole($adminRole);
 
     }
