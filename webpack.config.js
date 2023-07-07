@@ -10,6 +10,7 @@ module.exports = {
         alias: {
             '@': path.resolve('resources/js'),
             '~': path.resolve('node_modules'),
+            'resources': path.resolve('resources'),
             'public': path.resolve('public'),
             'resources/lang': path.resolve('resources/lang'),
         },

@@ -59,10 +59,6 @@ const { cart, showCart, addToCart } = useCart()
 
 // ======== Product Card ========
 
-// ------ Data -------
-
-
-
 // ------ Computed -------
 
 const products = computed(() => {

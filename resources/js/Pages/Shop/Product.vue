@@ -34,22 +34,17 @@
 </template>
 
 
-<script>
-
-import ShopLayout from "@/Layouts/ShopLayout";
-
-export default {
-    layout: ShopLayout
-}
-
-</script>
-
-
 <script setup>
 
 // ======== Import ========
 
 import useCart from "@/Composables/useCart";
+import ShopLayout from "@/Layouts/ShopLayout.vue";
+
+
+// ======== Options ========
+
+defineOptions({ layout: ShopLayout })
 
 
 // ======== Props ========

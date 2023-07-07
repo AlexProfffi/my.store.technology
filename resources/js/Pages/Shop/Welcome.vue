@@ -16,23 +16,17 @@
 </template>
 
 
-<script>
-
-import ShopLayout from "@/Layouts/ShopLayout";
-
-export default {
-    layout: ShopLayout
-}
-
-</script>
-
-
 <script setup>
 
 // ======== Import ========
 
+import ShopLayout from "@/Layouts/ShopLayout";
 import ProductCard from '@/Components/ProductCard';
 
+
+// ======== Options ========
+
+defineOptions({ layout: ShopLayout })
 
 
 // let str = `...<a style="ff" class='wrong'>... <p style="" class="doc">...<a

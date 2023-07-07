@@ -1,0 +1,28 @@
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type=number],
+input[type=number]:hover,
+input[type=number]:focus {
+  -webkit-appearance: none;
+          appearance: none;
+  -moz-appearance: textfield;
+}
+
+button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+a:focus, button:focus {
+  outline: none;
+}
+
+body {
+  margin: 0;
+}
+
+/*# sourceMappingURL=app.css.map*/

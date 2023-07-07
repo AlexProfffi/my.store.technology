@@ -1,3 +1,22 @@
 {
-    "/js/app.js": "/js/app.js"
+    "/js/app.js": "/js/app.js",
+    "/images/AdminSidebar/AdminLTELogo.png": "/images/AdminSidebar/AdminLTELogo.png",
+    "/images/AdminSidebar/user2-160x160.jpg": "/images/AdminSidebar/user2-160x160.jpg",
+    "/images/AllProducts/beats.jpg": "/images/AllProducts/beats.jpg",
+    "/images/AllProducts/benson.jpg": "/images/AllProducts/benson.jpg",
+    "/images/AllProducts/bosch.jpg": "/images/AllProducts/bosch.jpg",
+    "/images/AllProducts/delongi.jpg": "/images/AllProducts/delongi.jpg",
+    "/images/AllProducts/gopro.jpg": "/images/AllProducts/gopro.jpg",
+    "/images/AllProducts/haier.jpg": "/images/AllProducts/haier.jpg",
+    "/images/AllProducts/htc_one_s.png": "/images/AllProducts/htc_one_s.png",
+    "/images/AllProducts/iphone_5.jpg": "/images/AllProducts/iphone_5.jpg",
+    "/images/AllProducts/iphone_x.jpg": "/images/AllProducts/iphone_x.jpg",
+    "/images/AllProducts/iphone_x_silver.jpg": "/images/AllProducts/iphone_x_silver.jpg",
+    "/images/AllProducts/moulinex.jpg": "/images/AllProducts/moulinex.jpg",
+    "/images/AllProducts/poco.jpg": "/images/AllProducts/poco.jpg",
+    "/images/AllProducts/samsung_j6.jpg": "/images/AllProducts/samsung_j6.jpg",
+    "/images/AllProducts/texet.jpg": "/images/AllProducts/texet.jpg",
+    "/images/AllProducts/video_panasonic.jpg": "/images/AllProducts/video_panasonic.jpg",
+    "/images/vendor/primevue/resources/color.png": "/images/vendor/primevue/resources/color.png",
+    "/images/vendor/primevue/resources/hue.png": "/images/vendor/primevue/resources/hue.png"
 }
