@@ -4,7 +4,6 @@
 namespace App\Http\Middleware;
 
 
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Closure;
 use Inertia\Inertia;
@@ -28,11 +27,9 @@ class Authenticate {
 
 
 			if ($request->inertia()) {
-
 				return Inertia::location(route('login.create'));
 			}
 			else {
-
 				return redirect()->route('login.create');
 			}
 		}

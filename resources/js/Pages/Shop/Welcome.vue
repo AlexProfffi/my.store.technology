@@ -41,7 +41,7 @@ defineOptions({ layout: ShopLayout })
 // ======== Props ========
 
 const props = defineProps({
-    categories: Object,
+    categories: Object
 })
 
 </script>

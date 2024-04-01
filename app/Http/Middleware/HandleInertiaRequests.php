@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 
-use App\Http\Controllers\Shop\CartController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Inertia\Middleware;
 use Cart;
 
@@ -40,25 +40,27 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-    	$user = $request->user();
+        $authGuard = auth()->guard();
+
+    	$user = $authGuard->user();
 
         return array_merge(parent::share($request), [
 
-            'auth' => fn() => [
+            'auth' => [
                 'user' => $user,
             ],
 
-			'guest' => fn() => $user == null,
+			'guest' => $user == null,
 
-			'flash' => fn() => $request->session()->only(['noRights', 'success', 'message419', 'updateProduct', 'deleteProduct']),
+			'flash' => $request->session()->only(['noRights', 'success', 'message419', 'updateProduct', 'deleteProduct']),
 
-			'cart' => fn() => CartController::getCart(),
+			'cart' => Cart::getContent(),
 
-			'currentRouteName' => fn() => \Route::currentRouteName(),
+			'currentRouteName' => \Route::currentRouteName(),
 
-			'permissions' => fn() => $user ? $user->getAllPermissions() : [],
+			'permissions' => $user ? $user->getAllPermissions() : [],
 
-			'translations' => fn() =>
+			'translations' =>
 				translations(
 					resource_path('lang/'. app()->getLocale() .'.json')
 				),

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\LogoutAfter;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Services\Cart\CartDbStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -37,16 +39,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-
         $user = $request->user();
-
-        CartController::mergeDbWithSession($user);
 
 		if($user->hasRole('admin'))
 			return Inertia::location(route(RouteServiceProvider::ADMIN_HOME));
-
 		else
-			return redirect()->route(RouteServiceProvider::SHOP_HOME);
+            return redirect()->route(RouteServiceProvider::SHOP_HOME);
     }
 
     /**
@@ -57,23 +55,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function logout(Request $request)
     {
-
-		// ------- Get data before logout ------
-
 		$user = $request->user();
         $isAdmin = $user->hasRole('admin');
 
+        Auth::logout();
+        $request->session()->regenerate(true);
 
-		// ------- Logout and remove all session data -------
-
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-
-        // ------- Set data ------
-
-        CartController::TransferDbToSession($user);
+        event(new LogoutAfter($user));
 
 		if($isAdmin)
 			return Inertia::location(route(RouteServiceProvider::SHOP_HOME));

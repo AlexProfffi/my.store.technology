@@ -22,9 +22,7 @@ class PermissionSeeder extends Seeder
     {
 		app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-
         Permission::create(['name' => 'logout']);
-
 
 		$userRole = Role::create(['name' => 'user']);
         $userRole->givePermissionTo('logout');

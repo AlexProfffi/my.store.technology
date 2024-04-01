@@ -87,6 +87,7 @@ class ProductController extends Controller
 		$product->labels()->attach($form['label_ids'] ?? null);
 
 
+
     	return back()->with('success', __("Product added"));
 	}
 

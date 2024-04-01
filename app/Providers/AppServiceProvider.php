@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-
-use App\Services\Lion;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -17,6 +14,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+
+
+//        Gate::define('hest', function (User $user): bool {
+//            return false;
+//        });
+//
+//        Gate::before(function ($user, $ability) {
+//            dump($ability . 'before');
+//            if($user->id === 1) return false;
+//        });
+
+
+
 		$this->app->bind('path.public', function() {
 			return base_path().'/public';
 		});

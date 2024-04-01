@@ -5,6 +5,7 @@ namespace App\Exceptions;
 
 use App\Traits\RoleException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Inertia\Inertia;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -47,14 +48,15 @@ class Handler extends ExceptionHandler
 
 	public function render($request, Throwable $exception) {
 
-		if($exception instanceof UnauthorizedException) {
-
-            $roles = $exception->getRequiredRoles();
-
-            $roleString = implode(', ', $roles);
-
-            return back()->with('noRights', 'This operation can be performed by the ' . $roleString);
-		}
+//		if($exception instanceof UnauthorizedException) {
+//
+//            $roles = $exception->getRequiredRoles();
+//
+//            $roleString = implode(', ', $roles);
+//
+//            //return Inertia::location(back()->with('noRights', 'This operation can be performed by the ' . $roleString));
+//            return back()->with('noRights', 'This operation can be performed by the ' . $roleString);
+//		}
 
 
 		return parent::render($request, $exception);
