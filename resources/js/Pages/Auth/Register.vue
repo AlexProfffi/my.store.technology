@@ -66,10 +66,10 @@
 </template>
 
 <script>
-    import TextInput from '@/Components/Input'
-    import ValidationErrors from '@/Components/ValidationErrors'
-    import ShopLayout from "@/Layouts/ShopLayout"
-    import {Link} from "@inertiajs/inertia-vue3";
+    import TextInput from '@/Components/Input.vue'
+    import ValidationErrors from '@/Components/ValidationErrors.vue'
+    import ShopLayout from "@/Layouts/ShopLayout.vue"
+    import {Link} from "@inertiajs/vue3";
 
 
     export default {

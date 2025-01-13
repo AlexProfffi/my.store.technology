@@ -98,12 +98,12 @@
 </template>
 
 <script>
-    import AdminLayout from "@/Layouts/AdminLayout";
-    import ValidationErrors from "@/Components/ValidationErrors";
-    import CheckboxInput from '@/Components/Checkbox';
-    import TextInput from "@/Components/Input";
-    import ArrayErrors from "@/Components/ArrayErrors";
-    import { Head } from '@inertiajs/inertia-vue3';
+    import AdminLayout from "@/Layouts/AdminLayout.vue";
+    import ValidationErrors from "@/Components/ValidationErrors.vue";
+    import CheckboxInput from '@/Components/Checkbox.vue';
+    import TextInput from "@/Components/Input.vue";
+    import ArrayErrors from "@/Components/ArrayErrors.vue";
+    import { Head } from '@inertiajs/vue3';
 
     export default {
 

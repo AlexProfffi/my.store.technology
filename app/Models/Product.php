@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-use App\Services\Filterer\Filterer;
+use App\Services\Filter\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +17,7 @@ class Product extends Model
 	protected $guarded = [];
 
 	protected $hidden = [
-        'pivot',
+//        'pivot',
 //        'created_at',
 //        'updated_at'
     ];
@@ -49,9 +49,9 @@ class Product extends Model
 	// =========== METHODS =============
 
 
-	public function scopeFilters(Builder $builder, Filterer $filterer): Builder {
+	public function scopeFilters(Builder $builder, Filter $filter): Builder {
 
-    	return $filterer->apply($builder);
+    	return $filter->apply($builder);
 	}
 
 

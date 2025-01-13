@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Services\Filterer\Filterer;
+use App\Services\Filterer\Filter;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Staudenmeir\EloquentEagerLimit\Relations\BelongsToMany;
 
 
 class Category extends Model
@@ -19,7 +20,6 @@ class Category extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'pivot',
     ];
 
 
@@ -32,6 +32,19 @@ class Category extends Model
 
 
 	// =========== METHODS =============
+
+    public function initialValuesProductFilterer(array $productRequest): array {
+
+        //$productRequest = $this->priceFromTo($productRequest);
+
+        return $productRequest ;
+    }
+
+
+//    public function priceFromTo(array $productRequest): array {
+//
+//        $this->
+//    }
 
 
     /**
@@ -54,7 +67,7 @@ class Category extends Model
                     ->take(3); // package eloquent-eager-limit
             }])
 
-            ->whereIn('slug', ['mobilnye-telefony', 'portativnaya-texnika'])
+            ->whereIn('slug', ['mobilnye-telefony', 'portativnaia-texnika'])
 
             ->get();
     }
@@ -63,15 +76,12 @@ class Category extends Model
     /**
      * category->products->labels
      *
-     * @param Filterer $filterer
+     * @param BelongsToMany $queryProductFilter
      * @return void
      */
-	public function paginateProductsWithRelations(Filterer $filterer): void {
+	public function paginateProductsWithRelations(BelongsToMany $queryProductFilter): void {
 
-
-		$this->setRelation('products', $this->products()
-
-			->filters($filterer)
+		$this->setRelation('products', $queryProductFilter
 
             ->orderBy('updated_at', 'desc')
             ->orderBy('id')

@@ -1,5 +1,5 @@
 <template>
-	<div v-for="product in products" :key="product.id" class="product-card col-sm-6 col-md-4">
+	<div class="product-card col-sm-6 col-md-4">
 		<div class="thumbnail">
 			<div class="labels">
 				<div v-for="label in product.labels"
@@ -11,19 +11,21 @@
 			<img class="img-fluid" :src="product.image">
 			<div class="caption">
 				<h3>
-					<Link :href="route('products.category.product.show', [category.slug, product.id])">
+					<Link :href="route('products.show', [category.slug, product.id])">
 						{{ product.name }}
 					</Link>
 				</h3>
 				<div style="margin-bottom: 5px">
 					{{ product.price }} руб.
 				</div>
-
+                <div style="margin-bottom: 5px">
+                    {{ product.id }}
+                </div>
 				<h5>
 					<form v-if="cart[product.id]" @submit.prevent="showCart">
 						<button type="submit" class="btn btn-primary" role="button">В корзинe</button>
 					</form>
-					<form v-else @submit.prevent="addToCart(category, product)">
+					<form v-else @submit.prevent="addToCart(cartForm, category, product)">
 						<button type="submit" class="btn btn-success" role="button">В корзинy</button>
 					</form>
 				</h5>
@@ -36,36 +38,31 @@
 
 <script setup>
 
-// ======== Import ========
-
-import useCart from "@/Composables/useCart";
-import {computed, toRefs} from "vue";
-import { Link } from '@inertiajs/inertia-vue3';
+import {Link, useForm} from '@inertiajs/vue3';
+import {storeToRefs} from "pinia";
+import {useCartStore} from "@/stores/cart";
 
 
 // ======== Props ========
 
 const props = defineProps({
     category: Object,
+    product: Object,
 })
 
-const { category } = toRefs(props)
 
+// ======== Use Cart Store ========
 
-// ======== Use Cart ========
-
-const { cart, showCart, addToCart } = useCart()
-
+const { cart } = storeToRefs(useCartStore());
+const { showCart, addToCart } = useCartStore()
 
 
 // ======== Product Card ========
 
-// ------ Computed -------
+// ------ Data -------
 
-const products = computed(() => {
-
-    return category.value.products.data ??
-        category.value.products;
+const cartForm = useForm({
+    quantity: 1
 })
 
 </script>

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Services\Cart\CartDbStorage;
 use App\Services\Cart\CartStorage;
 use Darryldecode\Cart\Cart;
 use Illuminate\Support\ServiceProvider;
@@ -18,7 +17,7 @@ class CartServiceProvider extends ServiceProvider
     {
         $this->app->singleton('cart', function ($app) {
 
-            if(auth()->check())
+            if(CartStorage::checkUserFromSession())
                 $storage = CartStorage::getAuthUserStorage();
             else
                 $storage = $app['session'];

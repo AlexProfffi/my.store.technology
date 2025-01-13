@@ -13,7 +13,7 @@ class ProductRequest extends FormRequest
 			'price_from' => ['numeric', 'min:1', 'max:1000000000'],
 			'price_to' => ['numeric', 'min:1', 'max:1000000000'],
 
-			'label_ids' => ['nullable', 'array'],
+			'label_ids' => ['array'],
 			'label_ids.*' => ['exists:labels,id']
 		];
 

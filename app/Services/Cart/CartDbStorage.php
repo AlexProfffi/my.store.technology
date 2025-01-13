@@ -2,41 +2,50 @@
 
 namespace App\Services\Cart;
 
-use App\Models\User;
 use Cart;
 use Darryldecode\Cart\CartCollection;
+use Darryldecode\Cart\ItemCollection;
 
 class CartDbStorage extends CartStorage
 {
-    private static User $user;
-    private static string $sessionKeyCartItems;
+    public function __construct() {
 
-    public function __construct(User $user){
-        self::$user = $user;
+        parent::__construct();
     }
 
+    /**
+     * @param string $sessionKeyCartItems
+     * @return CartCollection<int, ItemCollection>|array
+     */
     public function get(string $sessionKeyCartItems): CartCollection|array {
 
-        self::$sessionKeyCartItems = $sessionKeyCartItems;
+        if(static::$user->cart) {
 
-        if(self::$user->cart)
-            return self::$user->cart->data;
+            return static::$user->cart->data;
+        }
         else
             return [];
     }
 
+    /**
+     * @param string $sessionKeyCartItems
+     * @param CartCollection<int, ItemCollection>|array $cart
+     * @return void
+     */
     public function put(string $sessionKeyCartItems, CartCollection|array $cart): void {
 
-        if(self::$user->cart) {
+        if(static::$user->cart) {
 
-            self::$user->cart->update([
+            static::$user->cart->update([
                 'data' => $cart
             ]);
         }
         else {
-            self::$user->cart()->create([
+            $newCart = static::$user->cart()->create([
                 'data' => $cart
             ]);
+
+            static::$user->setRelation('cart', $newCart);
         }
     }
 
@@ -48,31 +57,35 @@ class CartDbStorage extends CartStorage
      */
     public static function mergeSessionWithDb(): void {
 
-        parent::clearContainer('cart'); // now this is the database storage
+        $sessionCart = Cart::getContent();
 
-        $dbCart = Cart::getContent();
+        if($sessionCart->isNotEmpty()) {
 
-        $sessionCart = session(self::$sessionKeyCartItems);
-        $sessionCartIsNotEmpty = isset($sessionCart);
-        session()->forget(self::$sessionKeyCartItems);
+            static::clearContainer('cart'); // toggle cart to the db storage
 
-        if($dbCart->isEmpty() && $sessionCartIsNotEmpty) {
+            $dbCart = Cart::getContent();
 
-            self::$user->cart()->create([
-                'data' => $sessionCart
-            ]);
+            Cart::clear(); // clear the db cart
 
-            return;
+            Cart::add($sessionCart->toArray() + $dbCart->toArray()); // add to the db storage
         }
+    }
 
-        if($dbCart->isNotEmpty() && $sessionCartIsNotEmpty) {
+    /**
+     * Event Login
+     *
+     * Transferring the session cart to the database.
+     *
+     */
+    public static function transferSessionToDb(): void
+    {
+        $sessionCart = Cart::getContent();
 
-            $sessionCartAll = $sessionCart->all();
-            $dbCartAll = $dbCart->all();
+        static::transferNullToStorage(); // toggle cart to the db storage and it is cleaned
 
-            self::$user->cart->update([
-                'data' => new CartCollection($sessionCartAll + $dbCartAll)
-            ]);
+        if($sessionCart->isNotEmpty()) {
+
+            Cart::add($sessionCart->toArray()); // add to db storage
         }
     }
 
@@ -82,22 +95,28 @@ class CartDbStorage extends CartStorage
      * Transferring the database cart to the session.
      *
      */
-    public static function TransferDbToSession(User $user): void {
+    public static function transferDbToSession(): void {
 
-        parent::clearContainer('cart'); // now this is the session storage
+        $dbCart = Cart::getContent();
 
-        if($user->cart)
-        {
-            $dbCart = $user->cart->data
-                ->toArray();
+        static::transferNullToStorage(); // toggle cart to the session storage and it is cleaned
+
+        if($dbCart->isNotEmpty()) {
+
+            Cart::add($dbCart->toArray()); // add to session storage
         }
-        else return;
+    }
 
-        /**
-         * Session cart
-         */
-        $dbCart !== []
-            ? Cart::add($dbCart)
-            : Cart::clear();
+    /**
+     * Event Logout
+     *
+     * Transferring null to the storage.
+     *
+     */
+    public static function transferNullToStorage(): void
+    {
+        static::clearContainer('cart');
+
+        Cart::clear();
     }
 }

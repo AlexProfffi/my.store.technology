@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\TestEvent;
+use App\Events\Test;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -21,10 +21,10 @@ class TestListener
     /**
      * Handle the event.
      *
-     * @param  \App\Events\TestEvent  $event
+     * @param  \App\Events\Test  $event
      * @return void
      */
-    public function handle(TestEvent $event)
+    public function handle(Test $event)
     {
         //
     }

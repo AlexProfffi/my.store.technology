@@ -15,8 +15,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
 
-
-
 //        Gate::define('hest', function (User $user): bool {
 //            return false;
 //        });
@@ -25,7 +23,6 @@ class AppServiceProvider extends ServiceProvider
 //            dump($ability . 'before');
 //            if($user->id === 1) return false;
 //        });
-
 
 
 		$this->app->bind('path.public', function() {

@@ -26,7 +26,6 @@ class User extends Authenticatable
     ];
 
 
-
 	// ========== RELATIONSHIPS ============
 
 	public function cart()

@@ -13,11 +13,13 @@ class CartController extends Controller
 
     public function addToCart(CartRequest $cartRequest, Category $category, Product $product) {
 
+        $requestItems = $cartRequest->validated();
+
         $cartItem = [
             'id' => $product->id,
             'name' => $product->name,
             'price' => $product->price,
-            'quantity' => $cartRequest->quantity,
+            'quantity' => $requestItems['quantity'],
             'attributes' => [
                 'image' => $product->image,
                 'category' => [
@@ -27,8 +29,6 @@ class CartController extends Controller
         ];
 
         Cart::add($cartItem);
-
-        return redirect()->back();
     }
 
 
@@ -42,8 +42,6 @@ class CartController extends Controller
                 'value' => $requestItems['quantity']
             ],
         ]);
-
-        return redirect()->back();
     }
 
 }

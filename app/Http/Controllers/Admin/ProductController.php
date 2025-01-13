@@ -75,18 +75,14 @@ class ProductController extends Controller
 
 		$form = collect($productRequest->validated());
 
-
 		$form['image'] =
 			$imageUploader->upload($form['image']);
-
 
     	$product = $this->product
 			->create($form->except(['category_ids', 'label_ids'])->toArray());
 
 		$product->categories()->attach($form['category_ids']);
 		$product->labels()->attach($form['label_ids'] ?? null);
-
-
 
     	return back()->with('success', __("Product added"));
 	}

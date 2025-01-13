@@ -60,10 +60,10 @@
 </template>
 
 <script>
-    import BreezeApplicationLogo from '@/Components/ApplicationLogo'
-    import BreezeDropdown from '@/Components/Dropdown'
-    import BreezeDropdownLink from '@/Components/DropdownLink'
-    import BreezeNavLink from '@/Components/NavLink'
+    import BreezeApplicationLogo from '@/Components/ApplicationLogo.vue'
+    import BreezeDropdown from '@/Components/Dropdown.vue'
+    import BreezeDropdownLink from '@/Components/DropdownLink.vue'
+    import BreezeNavLink from '@/Components/NavLink.vue'
 
     export default {
         components: {

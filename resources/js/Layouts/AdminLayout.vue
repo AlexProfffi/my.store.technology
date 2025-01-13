@@ -87,12 +87,12 @@
 
 <script>
 
-    require('admin-lte')
-    require('~/admin-lte/plugins/select2/js/select2.full.min.js');
-    require('@/Plugins/fontawesome.js');
+    import 'admin-lte'
+    import 'admin-lte/plugins/select2/js/select2.full.min.js'
+    import '@/Plugins/fontawesome.js'
 
-	import NavLink from "@/Components/NavLink";
-    import {Head} from "@inertiajs/inertia-vue3";
+	import NavLink from "@/Components/NavLink.vue";
+    import {Head} from "@inertiajs/vue3";
 
     export default {
 
@@ -137,10 +137,10 @@
 
 <style lang="scss">
 
-	@import "~admin-lte/plugins/select2/css/select2.min";
-    @import "~admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min";
-	@import "~admin-lte/build/scss/adminlte";
-	@import "resources/sass/Plugins/reset";
+	@import "admin-lte/plugins/select2/css/select2.min";
+    @import "admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min";
+	@import "admin-lte/build/scss/adminlte";
+	@import "../../css/Plugins/reset.css";
 
 
 	.admin-layout {

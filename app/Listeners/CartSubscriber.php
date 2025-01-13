@@ -2,28 +2,31 @@
 
 namespace App\Listeners;
 
-use App\Events\LogoutAfter;
 use App\Services\Cart\CartDbStorage;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 
 class CartSubscriber
 {
     public function handleLogin(Login $event): void {
 
-        CartDbStorage::mergeSessionWithDb();
+        //CartDbStorage::mergeSessionWithDb();
+        CartDbStorage::transferSessionToDb();
     }
 
-    public function handleLogout(LogoutAfter $event): void {
+    public function handleLogout(Logout $event): void {
 
-        CartDbStorage::TransferDbToSession($event->user);
+//        CartDbStorage::transferNullToStorage();
+//        CartDbStorage::transferDbToSession();
     }
 
     public function subscribe(): array {
+
         return [
             Login::class => [
                 'handleLogin',
             ],
-            LogoutAfter::class => [
+            Logout::class => [
                 'handleLogout',
             ],
         ];

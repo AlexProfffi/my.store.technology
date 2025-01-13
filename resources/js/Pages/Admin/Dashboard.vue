@@ -102,8 +102,8 @@
 
 // ======== Import ========
 
-import AdminLayout from "@/Layouts/AdminLayout";
-import {Head} from '@inertiajs/inertia-vue3';
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import {Head} from '@inertiajs/vue3';
 
 
 // ======== Props ========

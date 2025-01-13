@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Shop\WelcomeController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Shop\CartController;
@@ -11,34 +10,34 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\ProductController as DashboardProductController;
 
 
-// -------- / ----------
+// -------- Products ----------
 
-Route::get('/', [WelcomeController::class, 'index'])
-	->name('welcome');
-
-
-// -------- /categories ----------
-
-Route::get('/categories', [CategoryController::class, 'index'])
-	->name('categories');
-
-Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])
-	->name('categories.category.show');
-
-
-// -------- /products ----------
+Route::get('/', [ProductController::class, 'index'])
+	->name('products.index');
 
 Route::get('products/{category:slug}/{product:id}', [ProductController::class, 'show'])
-	->name('products.category.product.show');
+    ->name('products.show');
 
 
-// --------/cart ----------
+// -------- Categories ----------
 
-Route::patch('/cart/{category:slug}/{product:id}', [CartController::class, 'addToCart'])
-	->name('cart.category.product.addToCart');
+Route::get('/categories', [CategoryController::class, 'index'])
+	->name('categories.index');
+
+Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])
+	->name('categories.show');
+
+
+// --------Cart ----------
+
+Route::get('/cart', [CartController::class, 'cart'])
+    ->name('cart.index');
+
+Route::post('/cart/{category:slug}/{product:id}', [CartController::class, 'addToCart'])
+	->name('cart.store');
 
 Route::patch('/cart/{product:id}', [CartController::class, 'updateToCart'])
-    ->name('cart.product.updateToCart');
+    ->name('cart.update');
 
 
 Route::middleware(['auth'])->group(function () {

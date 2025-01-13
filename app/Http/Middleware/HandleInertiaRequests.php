@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Inertia\Middleware;
 use Cart;
 
@@ -51,6 +50,7 @@ class HandleInertiaRequests extends Middleware
             ],
 
 			'guest' => $user == null,
+
 
 			'flash' => $request->session()->only(['noRights', 'success', 'message419', 'updateProduct', 'deleteProduct']),
 

@@ -1,30 +1,46 @@
 
 // ------ Include modules -------
 
-window.Popper = require('popper.js').default;
-window.$ = window.jQuery = require('jquery');
+import '/resources/css/app.css'
+
+import popper from 'popper.js'
+//window.Popper = require('popper.js').default;
+
+import $ from "jquery";
+// window.$ = window.jQuery = require('jquery');
 
 import { createApp, h } from 'vue';
-import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue3';
+import { createInertiaApp } from '@inertiajs/vue3'
 import { ZiggyVue } from 'ziggy';
+
+import PrimeVue from "primevue/config";
+import Aura from '@primevue/themes/aura';
+
+import { createPinia } from "pinia";
+const pinia = createPinia();
+
 
 
 // ------- Inertia --------
 
 const el = document.getElementById('app');
 
-const app = createApp({
-
-    setup() {
+createInertiaApp({
+    resolve: name => {
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+        return pages[`./Pages/${name}.vue`]
     },
-
-    render: () =>
-        h(InertiaApp, {
-            initialPage: JSON.parse(el.dataset.page),
-            resolveComponent: (name) => require(`./Pages/${name}`).default,
-        }),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(PrimeVue, {
+                theme: {
+                    preset: Aura
+                }
+            })
+            .use(pinia)
+            .use(ZiggyVue)
+            .mount(el)
+    },
 })
-    .use(InertiaPlugin)
-    .use(ZiggyVue)
 
-app.mount(el);

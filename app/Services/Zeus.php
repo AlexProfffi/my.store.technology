@@ -4,7 +4,8 @@ namespace App\Services;
 
 class Zeus
 {
-    public function __construct(Chirik $chirik)
+    public function __construct()
     {
+        dump(5);
     }
 }

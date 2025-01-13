@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\LogoutAfter;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Shop\CartController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
-use App\Services\Cart\CartDbStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -22,7 +19,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-
         return Inertia::render('Auth/Login', [
             'status' => session('status'),
         ]);
@@ -37,7 +33,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-        $request->session()->regenerate();
 
         $user = $request->user();
 
@@ -60,8 +55,6 @@ class AuthenticatedSessionController extends Controller
 
         Auth::logout();
         $request->session()->regenerate(true);
-
-        event(new LogoutAfter($user));
 
 		if($isAdmin)
 			return Inertia::location(route(RouteServiceProvider::SHOP_HOME));

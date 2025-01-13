@@ -7,19 +7,19 @@
 			<div class="d-flex justify-content-end">
 				<ul class="d-flex" style="list-style: none">
 					<li>
-						<Link :href="route('welcome')" class="ml-4 text-muted">
+						<Link :href="route('products.index')" class="ml-4 text-muted">
 							Главная
 						</Link>
 					</li>
 
 					<li>
-						<Link :href="route('categories')" class="ml-4 text-muted">
+						<Link :href="route('categories.index')" class="ml-4 text-muted">
 							Категории
 						</Link>
 					</li>
 					<li>
 						<a href="#" @click.prevent="showCart" class="ml-4 text-muted">Корзина</a>
-						<cart-window></cart-window>
+						<Cart></Cart>
 					</li>
 					<li v-if="can('logout')">
 						<a @click.prevent="logOutForm.post(route('logout.store'))" href="#" class="ml-4 text-muted">
@@ -37,6 +37,7 @@
 								Register
 							</Link>
 						</li>
+                        <div @click="++gg">{{gg}}</div>
 					</template>
 				</ul>
 			</div>
@@ -57,18 +58,18 @@
 
 import Messages from "@/Components/Messages.vue";
 
-require('bootstrap');
-import useCart from "@/Composables/useCart";
-import CartWindow from "@/Pages/Shop/CartWindow";
-import {computed} from "vue";
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { Link, Head } from '@inertiajs/inertia-vue3';
+import 'bootstrap';
+import Cart from "@/Pages/Shop/Cart.vue";
+import {computed, ref} from "vue";
+import { useForm, usePage } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import {can} from "@/helpers";
+import {useCartStore} from "@/stores/cart";
 
+const gg = ref(0)
+// ======== Use Cart Store ========
 
-// ======== Use Cart ========
-
-const { showCart } = useCart()
+const { showCart } = useCartStore()
 
 
 // ======== Shop Layout ========
@@ -82,13 +83,14 @@ const logOutForm = useForm({})
 
 const guest = computed(() => {
 
-    return usePage().props.value.guest;
+    return usePage().props.guest;
 })
 
 const currentRouteName = computed(() => {
 
-    return usePage().props.value.currentRouteName;
+    return usePage().props.currentRouteName;
 })
+
 
 
 </script>
@@ -96,7 +98,7 @@ const currentRouteName = computed(() => {
 
 <style lang="scss">
 
-	@import '~bootstrap/scss/bootstrap';
-	@import "resources/sass/Plugins/reset";
+	@import 'bootstrap/scss/bootstrap';
+	@import "/resources/css/Plugins/reset";
 
 </style>

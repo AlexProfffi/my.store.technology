@@ -89,12 +89,12 @@
 </template>
 
 <script>
-    import AdminLayout from "@/Layouts/AdminLayout";
-    import ValidationErrors from "@/Components/ValidationErrors";
-    import CheckboxInput from '@/Components/Checkbox';
-    import ArrayErrors from "@/Components/ArrayErrors";
-    import TextInput from "@/Components/Input";
-    import { Head } from '@inertiajs/inertia-vue3';
+    import AdminLayout from "@/Layouts/AdminLayout.vue";
+    import ValidationErrors from "@/Components/ValidationErrors.vue";
+    import CheckboxInput from '@/Components/Checkbox.vue';
+    import ArrayErrors from "@/Components/ArrayErrors.vue";
+    import TextInput from "@/Components/Input.vue";
+    import { Head } from '@inertiajs/vue3';
 
     export default {
 

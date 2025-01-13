@@ -18,7 +18,7 @@ class Cart extends Model
     {
         return new Attribute(
             get: fn(string $value) => unserialize($value),
-            set: fn(Collection $value) => serialize($value)
+            set: fn(Collection|array $value) => serialize($value)
         );
     }
 

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Listeners\CartSubscriber;
+use App\Listeners\TestSubscriber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     protected $subscribe = [
-        CartSubscriber::class
+        CartSubscriber::class,
     ];
 
     /**

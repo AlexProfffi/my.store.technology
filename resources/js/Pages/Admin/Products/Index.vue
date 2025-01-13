@@ -87,10 +87,10 @@
 
 <script>
 
-    import AdminLayout from "@/Layouts/AdminLayout";
-    import Pagination from "@/Components/Pagination";
-    import Messages from "@/Components/Messages";
-    import { Head, Link } from '@inertiajs/inertia-vue3';
+    import AdminLayout from "@/Layouts/AdminLayout.vue";
+    import Pagination from "@/Components/Pagination.vue";
+    import Messages from "@/Components/Messages.vue";
+    import { Head, Link } from '@inertiajs/vue3';
 
 
     export default {
