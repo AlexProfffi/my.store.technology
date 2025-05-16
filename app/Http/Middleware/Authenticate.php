@@ -6,12 +6,14 @@ namespace App\Http\Middleware;
 
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Closure;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 
 class Authenticate {
 
-	public function __construct(Auth $auth)
+
+    public function __construct(Auth $auth)
 	{
 		$this->auth = $auth;
 	}

@@ -7,7 +7,7 @@ use App\Services\Filterer\Filter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use Staudenmeir\EloquentEagerLimit\Relations\BelongsToMany;
+use Spatie\QueryBuilder\QueryBuilder;
 
 
 class Category extends Model
@@ -73,15 +73,10 @@ class Category extends Model
     }
 
 
-    /**
-     * category->products->labels
-     *
-     * @param BelongsToMany $queryProductFilter
-     * @return void
-     */
-	public function paginateProductsWithRelations(BelongsToMany $queryProductFilter): void {
 
-		$this->setRelation('products', $queryProductFilter
+	public function paginateProductsWithRelations($filterQuery): void {
+
+		$this->setRelation('products', $filterQuery
 
             ->orderBy('updated_at', 'desc')
             ->orderBy('id')

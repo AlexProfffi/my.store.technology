@@ -62,6 +62,14 @@ class LabelProductSeeder extends Seeder
                 'product_id' => 9,
                 'label_id' => 1
             ],
+            [
+                'product_id' => 14,
+                'label_id' => 1
+            ],
+            [
+                'product_id' => 15,
+                'label_id' => 1
+            ],
 		];
 
 

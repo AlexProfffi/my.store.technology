@@ -1,33 +1,42 @@
 <template>
-    <div class="price-from-to form-list">
+    <form @submit.prevent="onSubmit" class="price-from-to form-list">
         <div class="form-group">
             <label for="price-from-to-input-1" class="label">
                 Цена от
             </label>
             <input id="price-from-to-input-1" class="input" v-model.number="price_from" />
-            <div>{{errors}}</div>
+            <div>{{errors.price_from}}</div>
         </div>
         <div class="form-group">
             <label for="price-from-to-input-2" class="label">
                 до
             </label>
             <input id="price-from-to-input-2" class="input" v-model.number="price_to" />
+            <div>{{errors.price_to}}</div>
         </div>
-        <button @click.prevent="storeFilter" class="btn btn-primary button-ok">OK</button>
-    </div>
+        <button type="submit" class="btn btn-primary button-ok">OK</button>
+    </form>
 </template>
 
 
 <script setup>
 
-import {useFilterStore} from "@/stores/filter";
-import {storeToRefs} from "pinia";
+import {useFilter} from "@/Composables/filter.js";
 
+// -------- Use Filter --------
 
-// ======== Use Filter Store ========
+const { errors, submitFilter, useField, handleSubmit, beforeSubmit } = useFilter('products');
+const {value: price_from} = useField('price_from')
+const {value: price_to} = useField('price_to')
 
-const { price_from, price_to, errors } = storeToRefs(useFilterStore());
-const { storeFilter } = useFilterStore();
+beforeSubmit((params) => {
+
+    return {
+        ignoredFieldsOfErrors: {price_from: undefined, price_to: undefined}
+    }
+})
+
+const onSubmit = handleSubmit(submitFilter)
 
 </script>
 

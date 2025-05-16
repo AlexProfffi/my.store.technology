@@ -1,30 +1,26 @@
 import {defineStore} from "pinia";
-import {toRefs} from "vue";
-import {getUrlParamsAsObject, getIntersectionOfObjectsByProperties} from "@/helpers";
+import {parseQueryString, getIntersectionByKeysForObj1} from "@/helpers";
+
 
 
 // state:
 
 let filterForm = undefined
-let options = undefined
+let errors = undefined
 
 
 // actions:
 
 let storeFilter = undefined
 
-export const initFilterForm = (FilterForm, StoreFilter, Options = {}) => {
+export const initFilter = (FilterForm, StoreFilter, Options = {}) => {
 
     filterForm = FilterForm
     storeFilter = StoreFilter
-    options = Options
+    errors = Options.validation.errors
 
-    // exclude unnecessary url parameters
-    const intersectionObject = getIntersectionOfObjectsByProperties
-    (
-        getUrlParamsAsObject(location.search.substring(1)),
-        filterForm
-    )
+    if(urlParams) // exclude unnecessary url parameters
+        intersectionObject = getIntersectionByKeysForObj1(urlParams, fields)
 
     Object.assign(filterForm, intersectionObject) // assign the values of the necessary URL parameters
 }
@@ -32,10 +28,32 @@ export const initFilterForm = (FilterForm, StoreFilter, Options = {}) => {
 
 export const useFilterStore = defineStore('filter', () => {
 
+    function getFields(...fieldNames) {
+
+        const fields = {}
+
+        fieldNames.forEach((name) => {
+            fields[name] = filterForm[name]
+        })
+        console.log(fields)
+        return fields
+    }
+
+    function getErrors(...fieldNames) {
+
+        const Errors = {}
+
+        fieldNames.forEach((name) => {
+            Errors[name] = errors[name]
+        })
+
+        return Errors
+    }
+
     return {
-        ...toRefs(filterForm),
-        storeFilter,
-        errors: options.validation?.errors
+        getErrors,
+        getFields,
+        storeFilter
     }
 })
 

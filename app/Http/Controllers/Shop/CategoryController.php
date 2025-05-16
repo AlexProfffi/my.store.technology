@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Shop;
 
-
 use App\Http\Requests\Shop\ProductRequest;
 use App\Models\Category;
 use App\Models\Label;
 use App\Services\Filter\ProductFilter;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Route;
 
 
 class CategoryController extends Controller
@@ -33,34 +30,25 @@ class CategoryController extends Controller
 
     public function show(ProductRequest $productRequest, Category $category)
     {
-        $requestItems = $productRequest->validated();
+        $validatedData = $productRequest->validated();
 
-
-//        $requestItems =
-//            $category->initialValuesProductFilterer($requestItems);
-
-        // Product Filter
-        $productFilter = new ProductFilter($requestItems);
+        $productFilter = new ProductFilter($validatedData);
         $queryProductFilter = $category->products()->filters($productFilter);
 
-        // Using a Product Filter
-        $minPrice = $queryProductFilter->min('price');
-        $maxPrice = $queryProductFilter->max('price');
-
-		$category->paginateProductsWithRelations($queryProductFilter);
-        // ----------------------
+        $category->paginateProductsWithRelations($queryProductFilter);
+//        $validatedData['price_from'] ??= $queryProductFilter->min('price');
+//        $validatedData['price_to'] ??= $queryProductFilter->max('price');
 
         $labels = $this->label
             ->select(['id', 'name'])->get();
 
 		return Inertia::render('Shop/Categories/Show', [
+            'backendFilter' => [
+                'fields' => $validatedData[$productRequest->prefix] ?? $validatedData,
+                'prefix' => $productRequest->prefix
+            ],
 			'category' => $category,
-			'labels' => $labels,
-            'validationInitialValues' => [
-                'label_ids' => $requestItems['label_ids'] ?? [],
-                'price_from' => $requestItems['price_from'] ?? $minPrice,
-                'price_to' => $requestItems['price_to'] ?? $maxPrice,
-            ]
+			'labels' => $labels
 		]);
 	}
 }

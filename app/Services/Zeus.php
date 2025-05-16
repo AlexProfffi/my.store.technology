@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
-class Zeus
+
+use App\Contracts\Zeu;
+
+class Zeus implements Zeu
 {
-    public function __construct()
+    public function tork()
     {
         dump(5);
     }

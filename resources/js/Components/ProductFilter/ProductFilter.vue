@@ -1,9 +1,9 @@
 
 <template>
-    <form class="product-filter row">
+    <div class="product-filter row">
         <PriceFromTo />
         <LabelIds :labels="labels" />
-    </form>
+    </div>
 </template>
 
 
@@ -12,54 +12,63 @@
 import PriceFromTo from "@/Components/ProductFilter/Blocks/PriceFromTo.vue";
 import LabelIds from "@/Components/ProductFilter/Blocks/LabelIds.vue";
 
-import {initFilterForm} from "@/stores/filter";
-
-import {useForm} from 'vee-validate';
-import {object, array, number} from 'zod';
+import {useForm, useField} from 'vee-validate';
+import {object, number} from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
-import {getValidationFields} from "@/utils/ValidationFields.js";
 
 import {router} from "@inertiajs/vue3";
 
-import {getUrlWithoutQuery} from "@/helpers.js";
 import {reactive} from "vue";
+
+import {initFilter} from "@/Composables/filter.js";
+import {strNumberToNumber} from "@/utils/strNumberToNumber.js";
 
 
 // -------- Props --------
 
 const props = defineProps({
+    backendFilter: Object,
     labels: Array
 })
+
+const backendFields =
+    strNumberToNumber(props.backendFilter.fields)
+
+console.log(backendFields)
 
 
 // -------- Validation --------
 
-const { values, errors, handleSubmit } = useForm({
+const { values: validationFields, handleSubmit, errors } = useForm({
     validationSchema: toTypedSchema(
         object({
-            label_ids: array(number()).default([]),
-            price_from: number(),
-            price_to: number(),
-        }),
+            price_from: number().default(backendFields.price_from),
+            price_to: number().default(backendFields.price_to)
+        })
     )
 });
 
 
-// -------- Init Filter Form --------
+// -------- Init Filter --------
 
-// Data
+const filterFields = reactive({
+    label_ids: backendFields.label_ids ?? []
+})
 
-const filterForm = reactive(getValidationFields(values))
-
-
-initFilterForm(filterForm, handleSubmit(() => {
-
-    router.get(getUrlWithoutQuery(), filterForm, {
-        preserveScroll: true,
-        preserveState: true,
-    })
-}), {
+initFilter('products',{
+    prefix: props.backendFilter.prefix,
+    fields: filterFields,
+    methods: {
+        submitFilter: fields => {
+            router.get(location.pathname+location.hash, fields, {
+                preserveScroll: true,
+                preserveState: true,
+            })
+        },
+    },
     validation: {
+        fields: validationFields,
+        methods: { handleSubmit, useField },
         errors
     }
 })

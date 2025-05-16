@@ -18,13 +18,6 @@ class ProductSeeder extends Seeder
     {
 		$data = [
 			[
-                'parent_id' => null,
-				'name' => 'iPhone X 64GB',
-				'description' => 'Отличный продвинутый телефон с памятью на 64 gb',
-				'price' => 71990,
-				'image' => '/images/AllProducts/iphone_x.jpg'
-			],
-			[
                 'parent_id' => 1,
 				'name' => 'iPhone X 256GB',
 				'description' => 'Отличный продвинутый телефон с памятью на 256 gb',
@@ -115,6 +108,20 @@ class ProductSeeder extends Seeder
 				'price' => 9200,
 				'image' => '/images/AllProducts/bosch.jpg'
 			],
+            [
+                'parent_id' => 14,
+                'name' => 'Toren1',
+                'description' => 'Любите домашние котлеты? Вам определенно стоит посмотреть на эту мясорубку!',
+                'price' => 9200,
+                'image' => '/images/AllProducts/bosch.jpg'
+            ],
+            [
+                'parent_id' => 15,
+                'name' => 'Toren2',
+                'description' => 'Любите домашние котлеты? Вам определенно стоит посмотреть на эту мясорубку!',
+                'price' => 9200,
+                'image' => '/images/AllProducts/bosch.jpg'
+            ],
 		];
 
 

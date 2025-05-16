@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AddHeadersToResponse;
+use App\Http\Middleware\Test;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -36,12 +38,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\HandleInertiaRequests::class
+            \App\Http\Middleware\HandleInertiaRequests::class,
+            AddHeadersToResponse::class,
         ],
 
         'api' => [
-            'throttle:api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+//            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class
         ],
     ];
 
@@ -53,6 +57,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareAliases = [
+        'test' => Test::class,
 		'guest' => \App\Http\Middleware\Guest::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
 		'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,

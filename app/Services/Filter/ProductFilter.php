@@ -2,8 +2,13 @@
 
 namespace App\Services\Filter;
 
+use App\Contracts\Filter;
+use App\Traits\Filter\HasFilter;
 
-class ProductFilter extends Filter {
+
+class ProductFilter implements Filter  {
+
+    use HasFilter;
 
 	protected function label_ids(array $requestItems) {
 

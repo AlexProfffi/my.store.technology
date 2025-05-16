@@ -10,7 +10,7 @@
             <h1> {{ category.name }} </h1>
             <p> {{ category.description }} </p>
 
-            <ProductFilter :labels="labels"></ProductFilter>
+            <ProductFilter :labels="labels" :backendFilter="backendFilter"></ProductFilter>
 
             <div class="row">
                 <product-card
@@ -44,9 +44,9 @@ defineOptions({ layout: ShopLayout })
 // ======== Props ========
 
 const props = defineProps({
+    backendFilter: Object,
     category: Object,
-    labels: Array,
-    initialValues: Object
+    labels: Array
 })
 
 

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\Zeu;
+use App\Services\Zeus;
+use Illuminate\Support\Facades\Route;
+
 use Illuminate\Support\ServiceProvider;
 
 
@@ -28,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->bind('path.public', function() {
 			return base_path().'/public';
 		});
+
+
+
+
 
 //        $this->app->singleton(Lion::class, function ($app) {
 //            return new Lion();

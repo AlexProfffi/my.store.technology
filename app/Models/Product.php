@@ -3,11 +3,10 @@
 namespace App\Models;
 
 
-use App\Services\Filter\Filter;
+use App\Contracts\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class Product extends Model
@@ -49,9 +48,9 @@ class Product extends Model
 	// =========== METHODS =============
 
 
-	public function scopeFilters(Builder $builder, Filter $filter): Builder {
+	public function scopeFilters(Builder $builder, Filter $filter): void {
 
-    	return $filter->apply($builder);
+    	$filter->apply($builder);
 	}
 
 

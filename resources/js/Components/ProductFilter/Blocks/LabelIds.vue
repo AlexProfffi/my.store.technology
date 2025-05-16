@@ -25,28 +25,26 @@
 
 import Checkbox from "primevue/checkbox";
 import {watch} from "vue";
-import {useFilterStore} from "@/stores/filter";
-import {storeToRefs} from "pinia";
+import {useFilter} from "@/Composables/filter.js";
 
 
-// ======== Props ========
+
+// -------- Props --------
 
 const props = defineProps({
     labels: Array
 })
 
 
-// ======== Use Filter Store ========
+// -------- Use Filter --------
 
-const { label_ids } = storeToRefs(useFilterStore());
-const { storeFilter } = useFilterStore();
+const { submitFilter, getField } = useFilter('products');
+const label_ids = getField('label_ids')
 
 
-// ======== Label Ids ========
+// -------- Watch ---------
 
-// ------- Watch --------
-
-watch(label_ids, storeFilter)
+watch(label_ids, submitFilter)
 
 </script>
 

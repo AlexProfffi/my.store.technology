@@ -13,5 +13,8 @@ class EncryptCookies extends Middleware
      */
     protected $except = [
 		'developmentCookie',
+//        'storebreeze2_session',
+//        'XSRF-TOKEN',
+//        'doma'
     ];
 }

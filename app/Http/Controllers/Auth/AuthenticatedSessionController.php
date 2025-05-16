@@ -34,12 +34,13 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $user = $request->user();
-
-		if($user->hasRole('admin'))
-			return Inertia::location(route(RouteServiceProvider::ADMIN_HOME));
-		else
-            return redirect()->route(RouteServiceProvider::SHOP_HOME);
+        return 5;
+//        $user = $request->user();
+//
+//		if($user->hasRole('admin'))
+//			return Inertia::location(route(RouteServiceProvider::ADMIN_HOME));
+//		else
+//            return redirect()->route(RouteServiceProvider::SHOP_HOME);
     }
 
     /**

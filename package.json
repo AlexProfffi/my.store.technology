@@ -17,6 +17,7 @@
         "@primevue/themes": "^4.2.2",
         "@vee-validate/zod": "^4.15.0",
         "admin-lte": "3.1",
+        "axios": "^1.8.2",
         "bootstrap": "^4.6.0",
         "jquery": "^3.5.1",
         "lodash": "^4.17.19",
